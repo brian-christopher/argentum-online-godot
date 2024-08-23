@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3as2dgbfsjwj"]
+
+[ext_resource type="Script" path="res://ui/player_inventory.gd" id="1_5qxj3"]
+[ext_resource type="PackedScene" uid="uid://duypr07daioym" path="res://ui/inventory_container.tscn" id="1_rrjrt"]
+
+[node name="PlayerInventory" type="Panel" node_paths=PackedStringArray("inventory_container")]
+custom_minimum_size = Vector2(200, 160)
+offset_right = 200.0
+offset_bottom = 200.0
+mouse_filter = 1
+script = ExtResource("1_5qxj3")
+inventory_container = NodePath("InventoryContainer")
+
+[node name="InventoryContainer" parent="." instance=ExtResource("1_rrjrt")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5

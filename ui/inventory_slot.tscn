@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://dx1bpm1u1bu7v"]
+
+[ext_resource type="Script" path="res://ui/inventory_slot.gd" id="1_rcxfa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_culwi"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_22bcr"]
+font_size = 13
+
+[sub_resource type="LabelSettings" id="LabelSettings_t33yi"]
+font_size = 14
+
+[node name="InventorySlot" type="Panel" node_paths=PackedStringArray("icon_texture", "quantity_label", "equipped_label")]
+custom_minimum_size = Vector2(40, 40)
+offset_right = 32.0
+offset_bottom = 32.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_culwi")
+script = ExtResource("1_rcxfa")
+icon_texture = NodePath("Icon")
+quantity_label = NodePath("Quantity")
+equipped_label = NodePath("Equipped")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_22bcr")
+horizontal_alignment = 1
+vertical_alignment = 2
+clip_text = true
+
+[node name="Equipped" type="Label" parent="."]
+visible = false
+self_modulate = Color(1, 1, 0.0784314, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "+"
+label_settings = SubResource("LabelSettings_t33yi")
+horizontal_alignment = 2

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://duypr07daioym"]
+
+[ext_resource type="Script" path="res://ui/inventory_container.gd" id="1_1ur8c"]
+[ext_resource type="PackedScene" uid="uid://dx1bpm1u1bu7v" path="res://ui/inventory_slot.tscn" id="1_gcvi4"]
+
+[node name="InventoryContainer" type="GridContainer"]
+script = ExtResource("1_1ur8c")
+inventory_slot_scene = ExtResource("1_gcvi4")
+metadata/_edit_group_ = true

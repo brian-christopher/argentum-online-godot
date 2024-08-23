@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbsfihxi387kv"]
+
+[ext_resource type="Script" path="res://screens/game_screen.gd" id="1_hpf24"]
+[ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_dgea5"]
+[ext_resource type="PackedScene" uid="uid://cvqfqx1267dq1" path="res://scenes/world.tscn" id="3_drqlh"]
+[ext_resource type="PackedScene" uid="uid://c3as2dgbfsjwj" path="res://ui/player_inventory.tscn" id="6_12hwq"]
+
+[node name="GameScreen" type="Node" node_paths=PackedStringArray("ui_controller", "main_camera", "world", "player_inventory")]
+script = ExtResource("1_hpf24")
+ui_controller = NodePath("UIController")
+main_camera = NodePath("UIController/MainView/SubViewport/MainCamera")
+world = NodePath("UIController/MainView/SubViewport/World")
+player_inventory = NodePath("UIController/PlayerInventory")
+
+[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text")]
+script = ExtResource("2_dgea5")
+rich_text = NodePath("RichTextColor/RichText")
+send_text = NodePath("SendText")
+
+[node name="Background" type="Panel" parent="UIController"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="MainView" type="SubViewportContainer" parent="UIController"]
+offset_left = 33.0
+offset_top = 173.0
+offset_right = 769.0
+offset_bottom = 717.0
+stretch = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="SubViewport" type="SubViewport" parent="UIController/MainView"]
+handle_input_locally = false
+size = Vector2i(736, 544)
+render_target_update_mode = 4
+
+[node name="MainCamera" type="Camera2D" parent="UIController/MainView/SubViewport"]
+position_smoothing_speed = 10.0
+
+[node name="World" parent="UIController/MainView/SubViewport" instance=ExtResource("3_drqlh")]
+
+[node name="SendText" type="LineEdit" parent="UIController"]
+visible = false
+offset_left = 33.0
+offset_top = 135.0
+offset_right = 769.0
+offset_bottom = 166.0
+metadata/_edit_lock_ = true
+
+[node name="RichTextColor" type="ColorRect" parent="UIController"]
+offset_left = 33.0
+offset_top = 12.0
+offset_right = 769.0
+offset_bottom = 123.0
+color = Color(0.0431373, 0.0784314, 0.054902, 0.784314)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="RichText" type="RichTextLabel" parent="UIController/RichTextColor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+scroll_following = true
+
+[node name="PlayerInventory" parent="UIController" instance=ExtResource("6_12hwq")]
+offset_left = 792.0
+offset_top = 228.0
+offset_right = 992.0
+offset_bottom = 388.0
+
+[connection signal="gui_input" from="UIController/MainView" to="UIController" method="_on_main_view_gui_input"]
+[connection signal="text_submitted" from="UIController/SendText" to="UIController" method="_on_send_text_text_submitted"]

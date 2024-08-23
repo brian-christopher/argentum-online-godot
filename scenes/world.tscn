@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvqfqx1267dq1"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_16cg8"]
+[ext_resource type="PackedScene" uid="uid://bn5ejjhc1ilkd" path="res://scenes/character.tscn" id="2_bluja"]
+[ext_resource type="Script" path="res://scenes/map.gd" id="2_m87l0"]
+
+[node name="World" type="Node2D" node_paths=PackedStringArray("map")]
+script = ExtResource("1_16cg8")
+character_scene = ExtResource("2_bluja")
+map = NodePath("Map")
+
+[node name="Map" type="Node2D" parent="."]
+script = ExtResource("2_m87l0")

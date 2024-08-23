@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc43kq5q5nrjc"]
+
+[ext_resource type="Script" path="res://tools/exportador.gd" id="1_248ho"]
+
+[node name="Exportador" type="Node"]
+script = ExtResource("1_248ho")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -113.5
+offset_right = 71.5
+offset_bottom = 113.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="Panel" type="Panel" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "[Exportar]"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Mapas"
+
+[node name="Button2" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Cuerpos"
+
+[node name="Button3" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Cabezas"
+
+[node name="Button4" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Cascos"
+
+[node name="Button5" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Armas"
+
+[node name="Button6" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Escudos"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button" to="." method="export_maps"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button2" to="." method="export_bodies"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button3" to="." method="export_heads"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button4" to="." method="export_helmets"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button5" to="." method="export_weapons"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button6" to="." method="export_shields"]
