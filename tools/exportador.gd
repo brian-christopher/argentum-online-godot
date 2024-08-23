@@ -272,11 +272,9 @@ func export_map(id:int) -> void:
 			layer_3.add_child(sprite) 
 			sprite.owner = node
 	
-	node.set_meta("data", Marshalls.raw_to_base64(Utils.gzip_encode(map_data.flags)))
+	node.set_meta("data", map_data.flags)
 	if packed_scene.pack(node) == OK:
 		ResourceSaver.save(packed_scene, "res://maps/map_%d.tscn" % id)
-		pass
-
 
 func export_maps() -> void:
 	for i in range(1, 282 + 1):

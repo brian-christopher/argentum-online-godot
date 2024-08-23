@@ -39,17 +39,3 @@ static func vector_to_heading(direction:Vector2) -> int:
 static func in_map_bounds(x:int, y:int) -> bool:
 	return x >= 1 && x <= Declares.MAP_WIDTH && \
 		   y >= 1 && y <= Declares.MAP_HEIGHT
-
-static func gzip_encode(data:PackedByteArray) -> PackedByteArray:
-	var gzip = StreamPeerGZIP.new()
-	gzip.start_compression()
-	gzip.put_data(data)
-	gzip.finish()
-	return gzip.get_data(gzip.get_available_bytes())[1]
-	
-static func gzip_decode(data:PackedByteArray) -> PackedByteArray:
-	var gzip = StreamPeerGZIP.new()
-	gzip.start_decompression()
-	gzip.put_data(data)
-	gzip.finish()
-	return gzip.get_data(gzip.get_available_bytes())[1]

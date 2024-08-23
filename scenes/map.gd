@@ -12,7 +12,7 @@ func load_map(id:int) -> void:
 	if map_view:
 		map_view.queue_free()
 	map_view = load("res://maps/map_%d.tscn" % id).instantiate()
-	map_data = Utils.gzip_decode(Marshalls.base64_to_raw(map_view.get_meta("data"))) 
+	map_data = map_view.get_meta("data")
 	
 	add_child(map_view)
 

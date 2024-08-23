@@ -63,7 +63,6 @@ func create_item(x:int, y:int, grh_id:int) -> void:
 	
 func delete_item(x:int, y:int) -> void:
 	var node = items.get(Vector2i(x, y))
-	if node:
-		print("item destruido en [%d-%d]" % [x, y])
+	if node: 
 		node.queue_free()
 		items.erase(Vector2i(x, y))
