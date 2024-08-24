@@ -39,3 +39,24 @@ static func vector_to_heading(direction:Vector2) -> int:
 static func in_map_bounds(x:int, y:int) -> bool:
 	return x >= 1 && x <= Declares.MAP_WIDTH && \
 		   y >= 1 && y <= Declares.MAP_HEIGHT
+		
+static func string_has_valid_characters(str:String) -> bool:
+	for i in str.length():
+		if !Utils.is_legal_character(str.unicode_at(i)): 
+			return false 
+	return true
+
+static func is_legal_character(key_code:int) -> bool:
+	if key_code == 8:
+		return true
+	
+	if key_code < 32 || key_code == 44:
+		return false
+	
+	if key_code > 126:
+		return false
+	
+	if key_code in [34, 42, 47, 58, 60, 62, 63, 92, 124]:
+		return false 
+		
+	return true 

@@ -1,6 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6jdn61u1hwmu"]
+[gd_scene load_steps=4 format=3 uid="uid://c6jdn61u1hwmu"]
 
 [ext_resource type="Script" path="res://screens/lobby_screen.gd" id="1_veh3v"]
+[ext_resource type="PackedScene" path="res://maps/map_34.tscn" id="2_524de"]
+[ext_resource type="PackedScene" uid="uid://gmswmngcmj42" path="res://ui/login_panel.tscn" id="3_brwm8"]
 
-[node name="LobbyScreen" type="Node"]
+[node name="LobbyScreen" type="Node" node_paths=PackedStringArray("login_panel")]
 script = ExtResource("1_veh3v")
+login_panel = NodePath("CanvasLayer/LoginPanel")
+
+[node name="MapView" parent="." instance=ExtResource("2_524de")]
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1992, 2395)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="IPEndPoint" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = -171.0
+offset_right = 155.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="Address" type="LineEdit" parent="CanvasLayer/IPEndPoint"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "127.0.0.1"
+placeholder_text = "IP"
+alignment = 1
+
+[node name="Port" type="SpinBox" parent="CanvasLayer/IPEndPoint"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 65535.0
+value = 7666.0
+alignment = 1
+
+[node name="LoginPanel" parent="CanvasLayer" instance=ExtResource("3_brwm8")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.5
+offset_top = -132.0
+offset_right = 154.5
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="login_button_pressed" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_login_button_pressed"]
+[connection signal="quit_button_pressed" from="CanvasLayer/LoginPanel" to="." method="quit"]
+[connection signal="register_button_pressed" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_register_button_pressed"]
