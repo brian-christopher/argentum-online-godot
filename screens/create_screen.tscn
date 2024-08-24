@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6xxs00yfl2qf"]
+
+[ext_resource type="Script" path="res://screens/create_screen.gd" id="1_76deb"]
+
+[node name="CreateScreen" type="Node"]
+script = ExtResource("1_76deb")

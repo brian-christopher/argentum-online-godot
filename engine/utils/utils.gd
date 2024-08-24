@@ -60,3 +60,15 @@ static func is_legal_character(key_code:int) -> bool:
 		return false 
 		
 	return true 
+	
+static func show_message_box(title:String, content:String, parent:Node) -> AcceptDialog:
+	var dialog = AcceptDialog.new()
+	parent.add_child(dialog)
+	
+	dialog.canceled.connect(func(): dialog.queue_free())
+	dialog.confirmed.connect(func(): dialog.queue_free()) 
+	dialog.dialog_hide_on_ok = false
+	dialog.title = title
+	dialog.dialog_text = content 
+	dialog.popup_centered() 
+	return dialog

@@ -58,6 +58,7 @@ offset_bottom = 132.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="error" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_error"]
 [connection signal="login_button_pressed" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_login_button_pressed"]
 [connection signal="quit_button_pressed" from="CanvasLayer/LoginPanel" to="." method="quit"]
 [connection signal="register_button_pressed" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_register_button_pressed"]

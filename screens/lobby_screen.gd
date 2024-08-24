@@ -8,30 +8,35 @@ enum State{
 	Register
 } 
 var current_state:int = State.None
-
-# Called when the node enters the scene tree for the first time.
+ 
 func _ready() -> void:
+	SessionManager.connected.connect(on_session_manager_connected) 
 	SessionManager.data.connect(on_session_manager_data)
-	SessionManager.connected.connect(on_session_manager_connected)
-#	SessionManager.connect_to_server("127.0.0.1", 7666) 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+	
+	SessionManager.disconnected.connect(on_session_disconnected)
+	SessionManager.error.connect(on_session_disconnected)
+	
 func on_session_manager_connected() -> void:
-	var p = LoginExistingCharRequest.new()
-	p.username = "asd"
-	p.password = "123123"	
+	if current_state == State.Register:
+		switch_to_register_screen() 
+	else:
+		send_login_request() 
+		
+func on_session_disconnected() -> void:
+	current_state = State.None
+	login_panel.enable_auth_buttons()
+	SessionManager.disconnect_from_server()
 	
-	SessionManager.send_packet(p)
-
 func on_session_manager_data(data:PackedByteArray) -> void:
-	var screen = load("res://screens/game_screen.tscn").instantiate()
-	screen.incoming_data.push_back(data)
+	var stream = StreamPeerBuffer.new()
+	stream.data_array = data
 	
-	ScreenManager.switch_screen(screen) 
-
+	match stream.get_u8():
+		Enums.ServerPacketID.Logged:
+			switch_to_game_screen(data)
+		Enums.ServerPacketID.ErrorMsg:
+			login_failed(stream.get_utf8_string())
+		
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.keycode == KEY_ESCAPE:
@@ -45,6 +50,9 @@ func _on_login_panel_login_button_pressed() -> void:
 
 func _on_login_panel_register_button_pressed() -> void:
 	connect_to_server(State.Register)
+
+func _on_login_panel_error(str: String) -> void:
+	Utils.show_message_box("Error", str, self)
 	
 func connect_to_server(state:int) -> void:
 	login_panel.disable_auth_buttons()
@@ -58,3 +66,25 @@ func get_ip_and_port() -> Dictionary:
 		"ip" = %Address.text,
 		"port" = %Port.value
 	}
+	
+func switch_to_register_screen() -> void:
+	var screen = load("res://screens/create_screen.tscn").instantiate() 
+	ScreenManager.switch_screen(screen) 
+
+func switch_to_game_screen(stream:PackedByteArray) -> void:
+	var screen = load("res://screens/game_screen.tscn").instantiate()
+	screen.incoming_data.push_back(stream)
+	ScreenManager.switch_screen(screen) 
+
+func send_login_request() -> void: 
+	var p = LoginExistingCharRequest.new()
+	p.username = login_panel.get_username()
+	p.password = login_panel.get_password()
+	
+	SessionManager.send_packet(p)
+	
+func login_failed(error_message:String) -> void:
+	Utils.show_message_box("Error", error_message, self)
+	current_state = State.None
+	login_panel.enable_auth_buttons()
+	SessionManager.disconnect_from_server()
