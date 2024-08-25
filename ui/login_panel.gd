@@ -28,9 +28,7 @@ func enable_auth_buttons() -> void:
 	%Password.editable = true
 	%Username.editable = true
 
-func _on_login_pressed() -> void:
-	var check_is_string
-	
+func _on_login_pressed() -> void: 
 	var username = get_username()
 	var password = get_password()
 	

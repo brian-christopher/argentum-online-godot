@@ -1,6 +1,8 @@
 extends RefCounted
 class_name Utils
 
+const email_pattern := r"^[\w\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+
 static func heading_to_vector(heading:int) -> Vector2:
 	var retval = Vector2.ZERO
 	
@@ -60,6 +62,12 @@ static func is_legal_character(key_code:int) -> bool:
 		return false 
 		
 	return true 
+	
+static func is_valid_email(email: String) -> bool:
+	var regex = RegEx.new()
+	regex.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$") 
+	 
+	return regex.search(email) != null
 	
 static func show_message_box(title:String, content:String, parent:Node) -> AcceptDialog:
 	var dialog = AcceptDialog.new()

@@ -377,3 +377,38 @@ enum TileFlags {
 	ROOF =1 << 1,
 	WATER = 1 << 2,
 } 
+
+enum Race{
+	HUMAN = 1,
+	ELF,
+	DROW,
+	GNOME,
+	DWARF
+}
+
+enum Home{
+	ULLATHORPE = 1,
+	NIX,
+	BANDERBILL,
+	LINDOS,
+	ARGHAL,
+}
+
+enum Class{
+	MAGE = 1,    # Mago
+	CLERIC,      # Clérigo
+	WARRIOR,     # Guerrero
+	ASSASSIN,    # Asesino
+	THIEF,       # Ladrón
+	BARD,        # Bardo
+	DRUID,       # Druida
+	BANDIT,      # Bandido
+	PALADIN,     # Paladín
+	HUNTER,      # Cazador
+	FISHER,      # Pescador
+	BLACKSMITH,  # Herrero
+	LUMBERJACK,  # Leñador
+	MINER,       # Minero
+	CARPENTER,   # Carpintero
+	PIRATE       # Pirata
+}

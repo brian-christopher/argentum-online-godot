@@ -128,6 +128,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass
 			Enums.ServerPacketID.ResuscitationSafeOff:
 				pass
+			Enums.ServerPacketID.ResuscitationSafeOn:
+				pass
 			Enums.ServerPacketID.DumbNoMore:
 				pass
 			Enums.ServerPacketID.UserIndexInServer:

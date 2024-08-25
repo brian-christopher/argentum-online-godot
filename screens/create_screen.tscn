@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6xxs00yfl2qf"]
+[gd_scene load_steps=4 format=3 uid="uid://c6xxs00yfl2qf"]
 
 [ext_resource type="Script" path="res://screens/create_screen.gd" id="1_76deb"]
 [ext_resource type="PackedScene" path="res://maps/map_213.tscn" id="2_unil0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o81rl"]
+font_size = 20
 
 [node name="CreateScreen" type="Node"]
 script = ExtResource("1_76deb")
@@ -13,3 +16,292 @@ metadata/_edit_lock_ = true
 position = Vector2(2363, 2567)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -292.0
+offset_top = -238.5
+offset_right = -84.0
+offset_bottom = 35.5
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Clase"
+horizontal_alignment = 1
+
+[node name="Class" type="OptionButton" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Raza"
+horizontal_alignment = 1
+
+[node name="Race" type="OptionButton" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Genero"
+horizontal_alignment = 1
+
+[node name="Gender" type="OptionButton" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Hombre"
+popup/item_1/text = "Mujer"
+popup/item_1/id = 1
+
+[node name="Label4" type="Label" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Hogar"
+horizontal_alignment = 1
+
+[node name="Home" type="OptionButton" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AttributesContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 108.0
+offset_top = -194.5
+offset_right = 280.0
+offset_bottom = -8.5
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/AttributesContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/AttributesContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Atributos"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Names" type="VBoxContainer" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Names"]
+layout_mode = 2
+text = "Fuerza"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Names"]
+layout_mode = 2
+text = "Agilidad"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Names"]
+layout_mode = 2
+text = "Inteligencia"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Names"]
+layout_mode = 2
+text = "Carisma"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Names"]
+layout_mode = 2
+text = "Constitucion"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attributes" type="VBoxContainer" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Attribute" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Attributes"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attribute2" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Attributes"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attribute3" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Attributes"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attribute4" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Attributes"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attribute5" type="Label" parent="CanvasLayer/AttributesContainer/MarginContainer/VBoxContainer/HBoxContainer/Attributes"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ThrowDice" type="Button" parent="CanvasLayer"]
+offset_left = 108.0
+offset_top = 395.5
+offset_right = 280.0
+offset_bottom = 439.5
+text = "Lanzar
+"
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -256.0
+offset_right = 106.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Registro"
+label_settings = SubResource("LabelSettings_o81rl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Nombre"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Username" type="LineEdit" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Correo"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Email" type="LineEdit" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Contraseña"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Password" type="LineEdit" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+secret = true
+
+[node name="Label4" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Confirmar Contraseña"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmPassword" type="LineEdit" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+secret = true
+
+[node name="Register" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = 66.0
+offset_right = 106.0
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Crear Personaje"
+
+[node name="Quit" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 83.0
+offset_top = -116.0
+offset_right = 211.0
+offset_bottom = -55.0
+grow_vertical = 0
+text = "Salir"
+
+[connection signal="pressed" from="CanvasLayer/ThrowDice" to="." method="throw_dice"]
+[connection signal="pressed" from="CanvasLayer/Register" to="." method="_on_register_pressed"]
