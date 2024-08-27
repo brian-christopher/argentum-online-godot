@@ -12,10 +12,11 @@ main_camera = NodePath("UIController/MainView/SubViewport/MainCamera")
 world = NodePath("UIController/MainView/SubViewport/World")
 player_inventory = NodePath("UIController/PlayerInventory")
 
-[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text")]
+[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "player_inventory")]
 script = ExtResource("2_dgea5")
 rich_text = NodePath("RichTextColor/RichText")
 send_text = NodePath("SendText")
+player_inventory = NodePath("PlayerInventory")
 
 [node name="Background" type="Panel" parent="UIController"]
 anchors_preset = 15
@@ -35,11 +36,14 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="SubViewport" type="SubViewport" parent="UIController/MainView"]
+unique_name_in_owner = true
 handle_input_locally = false
 size = Vector2i(736, 544)
 render_target_update_mode = 4
 
 [node name="MainCamera" type="Camera2D" parent="UIController/MainView/SubViewport"]
+unique_name_in_owner = true
+ignore_rotation = false
 position_smoothing_speed = 10.0
 
 [node name="World" parent="UIController/MainView/SubViewport" instance=ExtResource("3_drqlh")]

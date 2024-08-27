@@ -55,3 +55,11 @@ grow_vertical = 2
 text = "+"
 label_settings = SubResource("LabelSettings_t33yi")
 horizontal_alignment = 2
+
+[node name="Selected" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0.494118, 0.431373, 0.0901961, 0.392157)

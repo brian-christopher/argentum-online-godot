@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5ayda1k1ew1p"]
+
+[ext_resource type="Script" path="res://scenes/character/character_renderer.gd" id="1_frbyf"]
+
+[node name="CharacterRenderer" type="Node2D"]
+script = ExtResource("1_frbyf")
+
+[node name="Body" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Head" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -23)
+
+[node name="Helmet" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -23)
+
+[node name="Weapon" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Shield" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true

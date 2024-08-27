@@ -17,16 +17,23 @@ func create_character(data:CharacterCreateResponse) -> void:
 	characters.push_back(character)
 	map.add_overlap_entity(character)
 	
+	character.set_character_name(data.name)
 	character.char_index = data.char_index
+	character.heading = data.heading
+	character.speed = 110 if data.name.is_empty() else 140
+	character.renderer.set_helmet(data.helmet)
+	character.renderer.set_head(data.head)
+	character.renderer.set_body(data.body)
+	character.renderer.set_shield(data.shield)
+	character.renderer.set_weapon(data.weapon)
 	character.grid_position = Vector2i(data.x, data.y)
-	character.position = Vector2(data.x * 32, data.y * 32) - Vector2(32, 32) 
-
+	character.position = Vector2((data.x - 1) * 32, (data.y - 1) * 32) + Vector2(16, 32)
+	
 func character_remove(char_index:int) -> void:
 	var character = get_character_by_id(char_index)
 	if character:
 		characters.erase(character)
 		character.queue_free()
-
 
 func get_character_by_id(char_index:int) -> CharacterController:
 	for character in characters:

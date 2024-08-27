@@ -30,9 +30,10 @@ func set_tile_blocked(x:int, y:int, state:bool, fixed:bool = true) -> void:
 	if fixed:
 		x -= 1
 		y -= 1 
-	var flags = map_data[x + y * Declares.MAP_WIDTH]
+		
+	var flags = map_data[x + y * Declares.MAP_WIDTH]	
 	if state:
 		flags |= Enums.TileFlags.BLOCKED
 	else:
-		flags ^= Enums.TileFlags.BLOCKED
+		flags &= ~Enums.TileFlags.BLOCKED
 	map_data[x + y * Declares.MAP_WIDTH] = flags

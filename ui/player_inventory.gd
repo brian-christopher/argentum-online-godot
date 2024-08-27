@@ -11,6 +11,7 @@ func set_player_data(player_data:PlayerData) -> void:
 	inventory_container.slot_pressed.connect(on_slot_pressed)
 
 func on_slot_pressed(slot_index:int) -> void:
-	var p = UseItemRequest.new()
-	p.slot = slot_index + 1
-	#SessionManager.send_packet(p)
+	if slot_index < Declares.MAX_INVENTORY_SLOTS_SERVER:
+		var p = UseItemRequest.new()
+		p.slot = slot_index + 1
+		SessionManager.send_packet(p) 

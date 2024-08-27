@@ -29,7 +29,8 @@ func on_session_manager_data(data:PackedByteArray) -> void:
 	incoming_data.push_back(data)
 
 func on_session_manager_disconnected() -> void:
-	pass
+	var screen = load("res://screens/lobby_screen.tscn").instantiate() 
+	ScreenManager.switch_screen(screen) 
 
 func _process(delta: float) -> void:
 	check_keys()
@@ -73,7 +74,6 @@ func move_to(character:CharacterController, heading:int) -> void:
 	var legal_ok := false
 	
 	# If Cartel Then Cartel = False
-	
 	match heading:
 		Enums.Heading.NORTH:
 			legal_ok = legal_position(character.grid_position.x, character.grid_position.y - 1)
@@ -96,8 +96,9 @@ func move_to(character:CharacterController, heading:int) -> void:
 		
 	else:
 		if character.heading != heading:
-			# Call WriteChangeHeading(Direccion)
-			pass
+			var p = ChangeHeadingRequest.new()
+			p.heading = heading
+			SessionManager.send_packet(p)
 	
 func _physics_process(delta: float) -> void:
 	process_incoming_data()
@@ -141,7 +142,21 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 			Enums.ServerPacketID.SafeModeOn:
 				pass   
 			Enums.ServerPacketID.RemoveDialogs:
-				pass   
+				pass   	
+			Enums.ServerPacketID.RainToggle:
+				pass
+			Enums.ServerPacketID.UpdateHP:
+				handle_update_hp(stream.get_16())
+			Enums.ServerPacketID.NPCHitUser:
+				handle_npc_hit_user(NPCHitUserResponse.unpack(stream))
+			Enums.ServerPacketID.NPCSwing:
+				handle_npc_swing()
+			Enums.ServerPacketID.NPCKillUser:
+				handle_npc_kill_user()
+			Enums.ServerPacketID.CharacterChange:
+				handle_character_change(CharacterChangeResponse.unpack(stream))
+			Enums.ServerPacketID.UpdateSta:
+				handle_update_sta(UpdateStaResponse.unpack(stream))
 			Enums.ServerPacketID.PosUpdate:
 				handle_pos_update(PosUpdateResponse.unpack(stream))
 			Enums.ServerPacketID.BlockPosition:
@@ -195,9 +210,42 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				
 func handle_remove_char_dialog(char_index:int) -> void:
 	pass
+	
+func handle_update_sta(p:UpdateStaResponse) -> void:
+	pass
 
 func handle_character_remove(char_index:int) -> void:
 	world.character_remove(char_index)
+
+func handle_character_change(p:CharacterChangeResponse) -> void:
+	var character = world.get_character_by_id(p.char_index)
+	if character:
+		character.heading = p.heading
+		character.renderer.set_head(p.head)
+		character.renderer.set_helmet(p.helmet)
+		character.renderer.set_body(p.body)
+		character.renderer.set_weapon(p.weapon)
+		character.renderer.set_shield(p.shield)
+		
+	
+func handle_npc_swing() -> void:
+	ui_controller.add_to_console(Declares.MENSAJE_CRIATURA_FALLA_GOLPE, Color.RED, true, false)
+
+func handle_npc_kill_user() -> void:
+	ui_controller.add_to_console(Declares.MENSAJE_CRIATURA_MATADO, Color.RED, true, false)
+
+func handle_npc_hit_user(p:NPCHitUserResponse) -> void:
+	const match_dictionary = {
+		Declares.bCabeza : Declares.MENSAJE_GOLPE_CABEZA,
+		Declares.bBrazoIzquierdo : Declares.MENSAJE_GOLPE_BRAZO_IZQ,
+		Declares.bBrazoDerecho : Declares.MENSAJE_GOLPE_BRAZO_DER,
+		Declares.bPiernaIzquierda : Declares.MENSAJE_GOLPE_PIERNA_IZQ,
+		Declares.bPiernaDerecha : Declares.MENSAJE_GOLPE_PIERNA_DER,
+		Declares.bTorso : Declares.MENSAJE_GOLPE_TORSO,
+	}
+	
+	if match_dictionary.has(p.case):
+		ui_controller.add_to_console(match_dictionary[p.case] + str(p.damage), Color.RED, true, false)
 
 func handle_change_inventory_slot(p:ChangeInventorySlotResponse) -> void:
 	var item = Item.new()
@@ -220,7 +268,7 @@ func handle_change_spell_slot(p:ChangeSpellSlotResponse) -> void:
 	pass
 
 func handle_block_position(p:BlockPositionResponse) -> void:
-	pass
+	world.map.set_tile_blocked(p.x, p.y, p.blocked)
 	
 func handle_object_create(p:ObjectCreateResponse) -> void:
 	world.delete_item(p.x, p.y)
@@ -255,7 +303,10 @@ func handle_guild_chat(message:String) -> void:
 	pass
 
 func handle_show_message_box(message:String) -> void:
-	print(message)
+	if message.to_lower().contains("inactivo"):
+		Utils.show_message_box("", message, get_parent())
+	else :
+		Utils.show_message_box("Error", message, self)	
 
 func handle_send_skills(p:SendSkillsResponse) -> void:
 	pass
@@ -265,14 +316,17 @@ func handle_level_up(skill_points:int) -> void:
 
 func handle_play_wave(p:PlayWaveResponse) -> void:
 	pass
+
+func handle_update_hp(hp:int) -> void:
+	print(hp)
 	
 func handle_pos_update(p:PosUpdateResponse) -> void:
 	var character = world.get_character_by_id(main_character_index)
 	if !character: return
-	
+	print(character)
 	character.is_moving = false
 	character.grid_position = Vector2i(p.x, p.y)
-	character.position = Vector2(p.x * 32, p.y * 32) - Vector2(32, 32) 
+	character.position = Vector2((p.x - 1) * 32, (p.y - 1) * 32) + Vector2(16, 32)
 
 func handle_character_move(p:CharacterMoveResponse) -> void:
 	var sgn = func(value:int) -> int:
@@ -293,12 +347,15 @@ func handle_character_move(p:CharacterMoveResponse) -> void:
 	if sgn.call(add_y) ==  1: heading = Enums.Heading.SOUTH
 	
 	character.grid_position = Vector2i(p.x, p.y)
-	character.position = Vector2(p.x * 32, p.y * 32) - Vector2(32, 32) 
 	character.heading = heading
+	character.move_to_heading(heading)
 
 func handle_console_msg(p:ConsoleMsgResponse) -> void:
 	ui_controller.append_text(p.message)
 
 func handle_message_chat_over_head(p:MessageChatOverHeadResponse) -> void:
-	pass
+	var character = world.get_character_by_id(p.char_index)
+	if character:
+		var color = Color(p.r / 255.0, p.g / 255.0, p.b / 255.0)
+		character.talk(p.message, color)
 #endregion
