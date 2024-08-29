@@ -10,6 +10,11 @@ func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
 	
 func add_to_console(message:String, color:Color, bold:bool, italic:bool) -> void:
+	message = "[color=%s]%s[/color]" % [color.to_html(), message]  
+	if italic:
+		message = "[i]%s[/i]" % message 
+	if bold:
+		message = "[b]%s[/b]" % message  
 	rich_text.append_text(message + "\n")
 
 
@@ -24,9 +29,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("equip_object"):
 		equip_object()
 	if event.is_action_pressed("pick_up"):
-		pass
+		pick_up()
 	if event.is_action_pressed("combat_mode_toggle"):
 		SessionManager.send_packet(CombatModeToggleRequest.new())
+	if event.is_action_pressed("hide"):
+		hide_player()
 			
 func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -> Vector2:
 	return (transform_2d.inverse() * mouse_position / Declares.TILE_SIZE).ceil()
@@ -62,3 +69,12 @@ func equip_object() -> void:
 		var p = EquipItemRequest.new()
 		p.slot = selected_slot + 1
 		SessionManager.send_packet(p) 
+
+func pick_up() -> void:
+	SessionManager.send_packet(PickUpRequest.new())
+
+func hide_player() -> void:
+	var p = WorldRequest.new()
+	p.skill = Enums.Skill.OCULTARSE
+	
+	SessionManager.send_packet(p)

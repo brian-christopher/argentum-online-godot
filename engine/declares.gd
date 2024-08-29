@@ -113,3 +113,101 @@ const home_names = {
 	Enums.Home.LINDOS: "Lindos",
 	Enums.Home.ARGHAL: "Arghal"
 }
+
+const font_types = {
+	Enums.FontTypeNames.FONTTYPE_TALK: {
+		"color": Color8(255, 255, 255),
+		"bold": false,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_FIGHT: {
+		"color": Color8(255, 0, 0),
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_WARNING: {
+		"color": Color8(32, 51, 223),
+		"bold": true,
+		"italic": true
+	},
+	Enums.FontTypeNames.FONTTYPE_INFO: {
+		"color": Color8(65, 190, 156),
+		"bold": false,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_INFOBOLD: {
+		"color": Color8(65, 190, 156),
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_EJECUCION: {
+		"color": Color8(130, 130, 130),
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_PARTY: {
+		"color": Color8(255, 180, 250),
+		"bold": false,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_VENENO: {
+		"color": Color8(0, 255, 0),  # Solo se cambió el valor green
+		"bold": false,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_GUILD: {
+		"color": Color8(255, 255, 255),
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_SERVER: {
+		"color": Color8(0, 185, 0),  # Solo se cambió el valor green
+		"bold": false,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_GUILDMSG: {
+		"color": Color8(228, 199, 27),
+		"bold": false,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_CONSEJO: {
+		"color": Color8(130, 130, 255),
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_CONSEJOCAOS: {
+		"color": Color8(255, 60, 0),  # Solo se cambió el valor red y green
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_CONSEJOVesA: {
+		"color": Color8(0, 200, 255),  # Solo se cambió el valor green y blue
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_CONSEJOCAOSVesA: {
+		"color": Color8(255, 50, 0),  # Solo se cambió el valor red y green
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_CENTINELA: {
+		"color": Color8(0, 255, 0),  # Solo se cambió el valor green
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_GMMSG: {
+		"color": Color8(255, 255, 255),
+		"bold": false,
+		"italic": true
+	},
+	Enums.FontTypeNames.FONTTYPE_GM: {
+		"color": Color8(0, 185, 0),  # Solo se cambió el valor green
+		"bold": true,
+		"italic": false
+	},
+	Enums.FontTypeNames.FONTTYPE_CITIZEN: {
+		"color": Color8(0, 0, 200),  # Solo se cambió el valor blue
+		"bold": true,
+		"italic": false
+	}
+}

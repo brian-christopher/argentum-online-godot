@@ -145,6 +145,12 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass   	
 			Enums.ServerPacketID.RainToggle:
 				pass
+			Enums.ServerPacketID.UpdateExp:
+				handle_update_exp(stream.get_32())
+			Enums.ServerPacketID.UserSwing:
+				handle_user_swing()
+			Enums.ServerPacketID.UserHitNPC:
+				handle_user_hit_npc(stream.get_32())
 			Enums.ServerPacketID.UpdateHP:
 				handle_update_hp(stream.get_16())
 			Enums.ServerPacketID.NPCHitUser:
@@ -163,8 +169,12 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				handle_block_position(BlockPositionResponse.unpack(stream))	
 			Enums.ServerPacketID.ObjectCreate:
 				handle_object_create(ObjectCreateResponse.unpack(stream))	
+			Enums.ServerPacketID.ObjectDelete:
+				handle_object_delete(ObjectDeleteResponse.unpack(stream))
 			Enums.ServerPacketID.ChatOverHead:
 				handle_message_chat_over_head(MessageChatOverHeadResponse.unpack(stream))
+			Enums.ServerPacketID.UpdateTagAndStatus:
+				handle_update_tag_and_status(UpdateTagAndStatusResponse.unpack(stream))
 			Enums.ServerPacketID.ShowMessageBox:
 				handle_show_message_box(stream.get_utf8_string())
 			Enums.ServerPacketID.ConsoleMsg: 
@@ -187,6 +197,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				handle_update_stats(UpdateUserStatsResponse.unpack(stream))
 			Enums.ServerPacketID.CreateFX:
 				handle_create_fx(CreateFXResponse.unpack(stream))
+			Enums.ServerPacketID.SetInvisible:
+				handle_set_invisible(SetInvisibleResponse.unpack(stream))
 			Enums.ServerPacketID.CharacterCreate:
 				handle_character_create(CharacterCreateResponse.unpack(stream))
 			Enums.ServerPacketID.AreaChanged:
@@ -203,7 +215,6 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				handle_remove_char_dialog(stream.get_16())
 			Enums.ServerPacketID.CharacterRemove:
 				handle_character_remove(stream.get_16())
-			
 			_:
 				print_debug(packet_name)
 				return
@@ -267,12 +278,18 @@ func handle_change_inventory_slot(p:ChangeInventorySlotResponse) -> void:
 func handle_change_spell_slot(p:ChangeSpellSlotResponse) -> void:
 	pass
 
+func handle_update_tag_and_status(p:UpdateTagAndStatusResponse) -> void:
+	pass
+
 func handle_block_position(p:BlockPositionResponse) -> void:
 	world.map.set_tile_blocked(p.x, p.y, p.blocked)
 	
 func handle_object_create(p:ObjectCreateResponse) -> void:
 	world.delete_item(p.x, p.y)
 	world.create_item(p.x, p.y, p.grh_id)
+	
+func handle_object_delete(p:ObjectDeleteResponse) -> void:
+	world.delete_item(p.x, p.y)
 
 func handle_change_map(p:ChangeMapResponse) -> void:
 	world.load_map(p.id)
@@ -287,6 +304,11 @@ func handle_character_create(p:CharacterCreateResponse) -> void:
 	world.character_remove(p.char_index)
 	world.create_character(p) 
 	
+func handle_set_invisible(p:SetInvisibleResponse) -> void:
+	var character = world.get_character_by_id(p.char_index)
+	if character:
+		character.visible = !p.invisible
+	
 func handle_create_fx(p:CreateFXResponse) -> void:
 	pass
 
@@ -299,6 +321,9 @@ func handle_update_stats(p:UpdateUserStatsResponse) -> void:
 func update_hunger_and_thrist(p:UpdateHungerAndThirstResponse) -> void:
 	pass
 
+func handle_update_exp(experience:int) -> void:
+	pass
+
 func handle_guild_chat(message:String) -> void:
 	pass
 
@@ -306,7 +331,7 @@ func handle_show_message_box(message:String) -> void:
 	if message.to_lower().contains("inactivo"):
 		Utils.show_message_box("", message, get_parent())
 	else :
-		Utils.show_message_box("Error", message, self)	
+		Utils.show_message_box("Server", message, self)	
 
 func handle_send_skills(p:SendSkillsResponse) -> void:
 	pass
@@ -318,12 +343,12 @@ func handle_play_wave(p:PlayWaveResponse) -> void:
 	pass
 
 func handle_update_hp(hp:int) -> void:
-	print(hp)
+	pass
 	
 func handle_pos_update(p:PosUpdateResponse) -> void:
 	var character = world.get_character_by_id(main_character_index)
-	if !character: return
-	print(character)
+	if !character: return 
+	
 	character.is_moving = false
 	character.grid_position = Vector2i(p.x, p.y)
 	character.position = Vector2((p.x - 1) * 32, (p.y - 1) * 32) + Vector2(16, 32)
@@ -351,7 +376,14 @@ func handle_character_move(p:CharacterMoveResponse) -> void:
 	character.move_to_heading(heading)
 
 func handle_console_msg(p:ConsoleMsgResponse) -> void:
-	ui_controller.append_text(p.message)
+	var font = Declares.font_types.get(p.font_index)	
+	ui_controller.add_to_console(p.message, font.color, font.bold, font.italic)
+
+func handle_user_swing() -> void:
+	ui_controller.add_to_console(Declares.MENSAJE_FALLADO_GOLPE, Color.RED, true, false)
+
+func handle_user_hit_npc(damage:int) -> void:
+	ui_controller.add_to_console(Declares.MENSAJE_GOLPE_CRIATURA_1 + str(damage) + Declares.MENSAJE_2, Color.RED, true, false)
 
 func handle_message_chat_over_head(p:MessageChatOverHeadResponse) -> void:
 	var character = world.get_character_by_id(p.char_index)
