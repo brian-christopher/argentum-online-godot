@@ -1,14 +1,8 @@
-permite customizar los colores de los PJs
-'todos los valores deben estar entre 0 y 255
-'los rangos van de 1 a 48 (inclusive). El 0 y el 49,50 estan reservados. Mas arriba son ignorados.
-
-'criminales
 [Cr]
 R=255
 G=0
 B=0
 
-'ciudadanos
 [Ci]
 R=0
 G=128
@@ -19,43 +13,36 @@ R=0
 G=0
 B=0
 
-'consejeros
 [1]
 R=30
 G=150
 B=30
 
-'semidioses
 [2]
 R=30
 G=255
 B=30
 
-'dioses
 [3]
 R=250
 G=250
 B=150
 
-'admins
 [4]
 R=255
 G=255
 B=255
 
-'rolmasters
 [5]
 R=180
 G=180
 B=180
 
-'caos
 [6]
 R=255
 G=50
 B=0
 
-'consejo de bander
 [7]
 R=0
 G=195

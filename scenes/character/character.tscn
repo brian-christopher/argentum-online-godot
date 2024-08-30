@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c5ayda1k1ew1p" path="res://scenes/character/character_renderer.tscn" id="3_jqbfg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bf7nj"]
-font_size = 11
+font_size = 14
 
 [sub_resource type="LabelSettings" id="LabelSettings_luv78"]
 font_size = 12
@@ -28,7 +28,6 @@ offset_right = 124.0
 offset_bottom = 53.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "tato"
 label_settings = SubResource("LabelSettings_bf7nj")
 horizontal_alignment = 1
 clip_text = true

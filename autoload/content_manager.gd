@@ -35,9 +35,11 @@ class MapData:
 		flags.fill(0)
 	 
 var grh_data:Array[GrhData]
+var colores_pj:Array[Color]
 
 func _ready() -> void:
 	load_grh_data() 
+	load_colors()
 
 func load_grh_data() -> void:
 	var bytes = FileAccess.get_file_as_bytes("res://assets/init/graficos.ind")
@@ -75,6 +77,26 @@ func load_grh_data() -> void:
 			grh.region.size.y = stream.get_16()
 		
 		grh_data[grh_id] = grh
+		
+func load_colors() -> void:
+	var data = ConfigFile.new()
+	data.load("res://assets/init/colores.dat")
+	colores_pj.resize(51)
+	colores_pj.fill(Color.WHITE)
+	
+	for i in 51:
+		var color = Color8(data.get_value(str(i) , "R", 0), \
+							data.get_value(str(i), "G", 0), \
+							data.get_value(str(i), "B", 0))
+		colores_pj[i] = color
+		
+	colores_pj[49] =  Color8(data.get_value("Ci", "R", 0), \
+							 data.get_value("Ci", "G", 0), \
+							 data.get_value("Ci", "B", 0))
+							
+	colores_pj[50] =  Color8(data.get_value("Cr", "R", 0), \
+							 data.get_value("Cr", "G", 0), \
+							 data.get_value("Cr", "B", 0))
 
 func get_texture(id:int) -> Texture2D:
 	if id == 0: return null  

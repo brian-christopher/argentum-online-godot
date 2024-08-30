@@ -9,7 +9,9 @@ var is_moving:bool
 var heading:int = Enums.Heading.SOUTH
 var target_position:Vector2
 
-var speed:float = 140  
+var speed:float = 140
+var privs:int
+var criminal:bool
 
 func move_to_heading(heading: int) -> void:
 	if is_moving:
@@ -27,12 +29,12 @@ func _process(delta: float) -> void:
 
 func process_movement(delta:float) -> void:
 	if !is_moving: return
-	position = position.move_toward(target_position, speed * delta)  
+	position = position.move_toward(target_position, speed * delta)
 	if position.distance_to(target_position) < 0.01:
 		position = target_position
-		is_moving = false 
+		is_moving = false
 
-func procces_animation() -> void:  
+func procces_animation() -> void:
 	if is_moving:
 		renderer.play("walk_" + heading_to_string(heading))
 	else:
@@ -41,13 +43,13 @@ func procces_animation() -> void:
 func set_character_name(str:String) -> void:
 	%Name.text = str
 
-func set_character_name_color(color:String) -> void:
+func set_character_name_color(color:Color) -> void:
 	%Name.self_modulate = color
 
-func talk(msg:String, color:Color = Color.WHITE) -> void: 
+func talk(msg:String, color:Color = Color.WHITE) -> void:
 	$Talk.show()
 	$Talk.text = msg
-	$Talk.self_modulate = color  
+	$Talk.self_modulate = color
 	$TalkTimeout.start(10)
 
 func _on_talk_timeout_timeout() -> void:
@@ -64,3 +66,12 @@ func heading_to_string(heading:int) -> String:
 		Enums.Heading.WEST:
 			return "left"
 	return ""
+
+func update_tag_color() -> void:
+	if privs == 0:
+		if criminal:
+			set_character_name_color(ContentManager.colores_pj[50])
+		else:
+			set_character_name_color(ContentManager.colores_pj[49])
+	else:
+		set_character_name_color(ContentManager.colores_pj[privs])

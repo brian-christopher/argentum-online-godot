@@ -458,3 +458,15 @@ enum Skill{
 	WRESTLING = 20,
 	NAVEGACION = 21
 }
+
+
+enum PlayerType{
+	USER = 0x1,
+	CONSEJERO = 0x2,
+	SEMIDIOS = 0x4,
+	DIOS = 0x8,
+	ADMIN = 0x10,
+	ROLE_MASTER = 0x20,
+	CHAOS_COUNCIL = 0x40,
+	ROYAL_COUNCIL = 0x80,
+}

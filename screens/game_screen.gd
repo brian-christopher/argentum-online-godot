@@ -279,7 +279,11 @@ func handle_change_spell_slot(p:ChangeSpellSlotResponse) -> void:
 	pass
 
 func handle_update_tag_and_status(p:UpdateTagAndStatusResponse) -> void:
-	pass
+	var character = world.get_character_by_id(p.char_index)
+	if character:
+		character.criminal = p.criminal
+		character.set_character_name(p.user_tag)
+		character.update_tag_color()
 
 func handle_block_position(p:BlockPositionResponse) -> void:
 	world.map.set_tile_blocked(p.x, p.y, p.blocked)

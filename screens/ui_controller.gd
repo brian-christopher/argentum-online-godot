@@ -34,6 +34,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		SessionManager.send_packet(CombatModeToggleRequest.new())
 	if event.is_action_pressed("hide"):
 		hide_player()
+	if event.is_action_pressed("use_object"):
+		use_object()
 			
 func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -> Vector2:
 	return (transform_2d.inverse() * mouse_position / Declares.TILE_SIZE).ceil()
@@ -78,3 +80,10 @@ func hide_player() -> void:
 	p.skill = Enums.Skill.OCULTARSE
 	
 	SessionManager.send_packet(p)
+
+func use_object() -> void:
+	var selected_slot = player_inventory.inventory_container.selected_slot
+	if selected_slot >= 0 && selected_slot < Declares.MAX_INVENTORY_SLOTS_SERVER:
+		var p = UseItemRequest.new()
+		p.slot = selected_slot + 1
+		SessionManager.send_packet(p) 
