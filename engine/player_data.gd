@@ -3,6 +3,7 @@ class_name PlayerData
 
 
 var inventory:Inventory
+var user_navegando:bool
 
 
 func _init() -> void:

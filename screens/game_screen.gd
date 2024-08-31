@@ -64,10 +64,9 @@ func legal_position(x:int, y:int) -> bool:
 	
 	if world.get_character_at(x, y):
 		return false
-		
-	#If UserNavegando <> HayAgua(x, y) Then
-	#    Exit Function
-	#End If 
+	
+	if player_data.user_navegando != world.map.is_water_at_position(x, y):
+		return false
 	return true
 
 func move_to(character:CharacterController, heading:int) -> void:
@@ -93,7 +92,7 @@ func move_to(character:CharacterController, heading:int) -> void:
 		
 		character.heading = heading
 		character.grid_position += Vector2i(Utils.heading_to_vector(heading))
-		
+		do_pasos_fx(character)
 	else:
 		if character.heading != heading:
 			var p = ChangeHeadingRequest.new()
@@ -109,6 +108,26 @@ func camera_follow_player() -> void:
 	if character:
 		main_camera.position = character.position
 	
+
+func do_pasos_fx(character:CharacterController) -> void:
+	if !player_data.user_navegando:
+		character.pie = !character.pie
+		if character.pie:
+			play_sound("23.wav")	
+		else:
+			play_sound("24.wav")
+	else:
+		pass
+	#	play_sound("50.wav")
+	
+func play_sound(filename:String, pos:Vector2 = Vector2.ZERO) -> void:
+	var audio_stream = AudioStreamPlayer.new()
+	audio_stream.stream = load("res://assets/sounds/" + filename)
+	audio_stream.bus = "sound"
+	audio_stream.finished.connect(func(): audio_stream.queue_free())
+	get_parent().add_child(audio_stream)
+	audio_stream.play()	
+
 #region NETWORK
 func process_incoming_data() -> void:
 	while !incoming_data.is_empty():
@@ -145,6 +164,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass   	
 			Enums.ServerPacketID.RainToggle:
 				pass
+			Enums.ServerPacketID.NavigateToggle:
+				handle_navigate_toggle()
 			Enums.ServerPacketID.UpdateExp:
 				handle_update_exp(stream.get_32())
 			Enums.ServerPacketID.UserSwing:
@@ -185,6 +206,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				handle_play_wave(PlayWaveResponse.unpack(stream))
 			Enums.ServerPacketID.LevelUp:
 				handle_level_up(stream.get_16())
+			Enums.ServerPacketID.UpdateGold:
+				handle_update_gold(stream.get_32())
 			Enums.ServerPacketID.SendSkills:
 				handle_send_skills(SendSkillsResponse.unpack(stream))
 			Enums.ServerPacketID.GuildChat:	
@@ -223,6 +246,9 @@ func handle_remove_char_dialog(char_index:int) -> void:
 	pass
 	
 func handle_update_sta(p:UpdateStaResponse) -> void:
+	pass
+
+func handle_update_gold(gold:int) -> void:
 	pass
 
 func handle_character_remove(char_index:int) -> void:
@@ -331,6 +357,9 @@ func handle_update_exp(experience:int) -> void:
 func handle_guild_chat(message:String) -> void:
 	pass
 
+func handle_navigate_toggle() -> void:
+	player_data.user_navegando = !player_data.user_navegando
+
 func handle_show_message_box(message:String) -> void:
 	if message.to_lower().contains("inactivo"):
 		Utils.show_message_box("", message, get_parent())
@@ -344,7 +373,7 @@ func handle_level_up(skill_points:int) -> void:
 	pass
 
 func handle_play_wave(p:PlayWaveResponse) -> void:
-	pass
+	play_sound("%d.wav" % p.id)
 
 func handle_update_hp(hp:int) -> void:
 	pass
@@ -378,6 +407,10 @@ func handle_character_move(p:CharacterMoveResponse) -> void:
 	character.grid_position = Vector2i(p.x, p.y)
 	character.heading = heading
 	character.move_to_heading(heading)
+	
+	do_pasos_fx(character)
+		
+
 
 func handle_console_msg(p:ConsoleMsgResponse) -> void:
 	var font = Declares.font_types.get(p.font_index)	

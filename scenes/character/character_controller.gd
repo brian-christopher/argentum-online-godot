@@ -12,6 +12,7 @@ var target_position:Vector2
 var speed:float = 140
 var privs:int
 var criminal:bool
+var pie:bool
 
 func move_to_heading(heading: int) -> void:
 	if is_moving:

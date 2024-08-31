@@ -25,6 +25,12 @@ func is_tile_blocked(x:int, y:int, fixed:bool = true) -> bool:
 		x -= 1
 		y -= 1 
 	return map_data[x + y * Declares.MAP_WIDTH] & Enums.TileFlags.BLOCKED
+	
+func is_water_at_position(x:int, y:int, fixed:bool = true) -> bool: 
+	if fixed:
+		x -= 1
+		y -= 1 
+	return (map_data[x + y * Declares.MAP_WIDTH] & Enums.TileFlags.WATER) != 0
 
 func set_tile_blocked(x:int, y:int, state:bool, fixed:bool = true) -> void: 
 	if fixed:
