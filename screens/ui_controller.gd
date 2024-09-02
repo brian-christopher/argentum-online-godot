@@ -136,3 +136,12 @@ func meditate() -> void:
 
 func set_player_name(p_name:String) -> void:
 	name_label.text = p_name
+
+
+func _on_show_inventory_pressed() -> void:
+	spells_container.hide()
+	player_inventory.show()
+
+func _on_show_spells_pressed() -> void:
+	player_inventory.hide()
+	spells_container.show()

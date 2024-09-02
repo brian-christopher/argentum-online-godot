@@ -42,3 +42,16 @@ func selected_item() -> int:
 	if selected_items.is_empty():
 		return -1
 	return selected_items[0]
+
+
+func _on_move_down_pressed() -> void:
+	if selected_item() != -1 && selected_item() + 1 ==  Declares.MAXHECHI: return
+	item_list.move_item(selected_item(), selected_item() + 1)
+	item_list.select(selected_item())
+	SessionManager.send_packet(MoveSpellRequest.new(true, selected_item() + 1))
+
+func _on_move_up_pressed() -> void:
+	if selected_item() <= 0: return
+	item_list.move_item(selected_item(), selected_item() - 1)
+	item_list.select(selected_item())
+	SessionManager.send_packet(MoveSpellRequest.new(false, selected_item() + 1))
