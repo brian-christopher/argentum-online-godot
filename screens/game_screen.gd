@@ -24,6 +24,7 @@ func _ready() -> void:
 	SessionManager.error.connect(on_session_manager_disconnected)
 	
 	player_inventory.set_player_data(player_data)
+	ui_controller.set_player_data(player_data)
 	 
 func on_session_manager_data(data:PackedByteArray) -> void:
 	incoming_data.push_back(data)
@@ -34,6 +35,7 @@ func on_session_manager_disconnected() -> void:
 
 func _process(delta: float) -> void:
 	check_keys()
+	camera_follow_player()
 			
 func check_keys() -> void:
 	var character = world.get_character_by_id(main_character_index)
@@ -51,9 +53,6 @@ func check_keys() -> void:
 			#If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
 			move_to(character, input_map[k])
 			return
-	
-	
-	pass
 
 func legal_position(x:int, y:int) -> bool:
 	if !Utils.in_map_bounds(x, y):
@@ -101,7 +100,6 @@ func move_to(character:CharacterController, heading:int) -> void:
 	
 func _physics_process(delta: float) -> void:
 	process_incoming_data()
-	camera_follow_player()
 	
 func camera_follow_player() -> void:
 	var character = world.get_character_by_id(main_character_index)
@@ -138,13 +136,16 @@ func process_incoming_data() -> void:
 	
 func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 	var packet_names = Enums.ServerPacketID.keys()
+	var ids = []
 	
 	while stream.get_position() < stream.get_size():
 		var packet_id = stream.get_u8()
+		ids.push_back(packet_names[packet_id])
 		var packet_name = packet_names[packet_id]
 		
 		match packet_id:
 			Enums.ServerPacketID.Logged:
+				handle_logged(stream.get_utf8_string())
 				pass
 			Enums.ServerPacketID.ResuscitationSafeOff:
 				pass
@@ -246,10 +247,10 @@ func handle_remove_char_dialog(char_index:int) -> void:
 	pass
 	
 func handle_update_sta(p:UpdateStaResponse) -> void:
-	pass
-
+	player_data.sta = p.min_sta
+	
 func handle_update_gold(gold:int) -> void:
-	pass
+	player_data.gold = gold
 
 func handle_character_remove(char_index:int) -> void:
 	world.character_remove(char_index)
@@ -346,16 +347,33 @@ func handle_user_char_index_in_server(char_index:int) -> void:
 	main_character_index = char_index
 	
 func handle_update_stats(p:UpdateUserStatsResponse) -> void:
-	pass
+	player_data.experience = p.exp
+	player_data.experience_for_next_level = p.elu
+	player_data.level = p.elv
+	player_data.gold = p.gold
+	
+	player_data.hp = p.min_hp
+	player_data.max_hp = p.max_hp
+
+	player_data.sta = p.min_sta
+	player_data.max_sta = p.max_sta
+
+	player_data.mp = p.min_mp
+	player_data.max_mp = p.max_mp
+
 
 func update_hunger_and_thrist(p:UpdateHungerAndThirstResponse) -> void:
-	pass
+	player_data.hunger = p.hunger
+	player_data.thirst = p.thirst
 
 func handle_update_exp(experience:int) -> void:
-	pass
+	player_data.experience = experience
 
 func handle_guild_chat(message:String) -> void:
 	pass
+
+func handle_logged(username:String) -> void:
+	player_data.name = username
 
 func handle_navigate_toggle() -> void:
 	player_data.user_navegando = !player_data.user_navegando
@@ -376,7 +394,7 @@ func handle_play_wave(p:PlayWaveResponse) -> void:
 	play_sound("%d.wav" % p.id)
 
 func handle_update_hp(hp:int) -> void:
-	pass
+	player_data.hp = hp
 	
 func handle_pos_update(p:PosUpdateResponse) -> void:
 	var character = world.get_character_by_id(main_character_index)
@@ -409,8 +427,6 @@ func handle_character_move(p:CharacterMoveResponse) -> void:
 	character.move_to_heading(heading)
 	
 	do_pasos_fx(character)
-		
-
 
 func handle_console_msg(p:ConsoleMsgResponse) -> void:
 	var font = Declares.font_types.get(p.font_index)	

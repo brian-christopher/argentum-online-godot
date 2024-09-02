@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbsfihxi387kv"]
+[gd_scene load_steps=8 format=3 uid="uid://dbsfihxi387kv"]
 
 [ext_resource type="Script" path="res://screens/game_screen.gd" id="1_hpf24"]
 [ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_dgea5"]
 [ext_resource type="PackedScene" uid="uid://cvqfqx1267dq1" path="res://scenes/world.tscn" id="3_drqlh"]
+[ext_resource type="PackedScene" uid="uid://bij1hr2x2ioha" path="res://ui/stats_bar.tscn" id="5_74buj"]
 [ext_resource type="PackedScene" uid="uid://c3as2dgbfsjwj" path="res://ui/player_inventory.tscn" id="6_12hwq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1nye1"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_kyna6"]
+font_size = 12
 
 [node name="GameScreen" type="Node" node_paths=PackedStringArray("ui_controller", "main_camera", "world", "player_inventory")]
 script = ExtResource("1_hpf24")
@@ -12,18 +19,26 @@ main_camera = NodePath("UIController/MainView/SubViewport/MainCamera")
 world = NodePath("UIController/MainView/SubViewport/World")
 player_inventory = NodePath("UIController/PlayerInventory")
 
-[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "player_inventory")]
+[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "player_inventory", "name_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar")]
 script = ExtResource("2_dgea5")
 rich_text = NodePath("RichTextColor/RichText")
 send_text = NodePath("SendText")
 player_inventory = NodePath("PlayerInventory")
+name_label = NodePath("Name")
+hp_bar = NodePath("StatBars/HPBar")
+mp_bar = NodePath("StatBars/MPBar")
+sta_bar = NodePath("StatBars/STABar")
+thirst_bar = NodePath("StatBars/ThirstBar")
+hunger_bar = NodePath("StatBars/HungerBar")
+experience_bar = NodePath("ExperienceBar")
 
-[node name="Background" type="Panel" parent="UIController"]
+[node name="Background" type="ColorRect" parent="UIController"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.25098, 0.278431, 0.258824, 1)
 metadata/_edit_lock_ = true
 
 [node name="MainView" type="SubViewportContainer" parent="UIController"]
@@ -76,10 +91,87 @@ bbcode_enabled = true
 scroll_following = true
 
 [node name="PlayerInventory" parent="UIController" instance=ExtResource("6_12hwq")]
+custom_minimum_size = Vector2(200, 240)
 offset_left = 792.0
-offset_top = 228.0
+offset_top = 173.0
 offset_right = 992.0
-offset_bottom = 388.0
+offset_bottom = 413.0
+
+[node name="Name" type="Label" parent="UIController"]
+offset_left = 781.0
+offset_top = 12.0
+offset_right = 1013.0
+offset_bottom = 50.0
+text = "[Nombre]"
+label_settings = SubResource("LabelSettings_1nye1")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="StatBars" type="VBoxContainer" parent="UIController"]
+offset_left = 792.0
+offset_top = 448.0
+offset_right = 992.0
+offset_bottom = 694.0
+metadata/_edit_group_ = true
+
+[node name="Energia" type="Label" parent="UIController/StatBars"]
+layout_mode = 2
+text = "Energia"
+label_settings = SubResource("LabelSettings_kyna6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="STABar" parent="UIController/StatBars" instance=ExtResource("5_74buj")]
+layout_mode = 2
+
+[node name="Mana" type="Label" parent="UIController/StatBars"]
+layout_mode = 2
+text = "Mana
+"
+label_settings = SubResource("LabelSettings_kyna6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MPBar" parent="UIController/StatBars" instance=ExtResource("5_74buj")]
+layout_mode = 2
+
+[node name="Salud" type="Label" parent="UIController/StatBars"]
+layout_mode = 2
+text = "Salud
+"
+label_settings = SubResource("LabelSettings_kyna6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HPBar" parent="UIController/StatBars" instance=ExtResource("5_74buj")]
+layout_mode = 2
+
+[node name="Hambre" type="Label" parent="UIController/StatBars"]
+layout_mode = 2
+text = "Hambre"
+label_settings = SubResource("LabelSettings_kyna6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HungerBar" parent="UIController/StatBars" instance=ExtResource("5_74buj")]
+layout_mode = 2
+
+[node name="Sed" type="Label" parent="UIController/StatBars"]
+layout_mode = 2
+text = "Sed"
+label_settings = SubResource("LabelSettings_kyna6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ThirstBar" parent="UIController/StatBars" instance=ExtResource("5_74buj")]
+layout_mode = 2
+
+[node name="ExperienceBar" parent="UIController" instance=ExtResource("5_74buj")]
+offset_left = 781.0
+offset_top = 77.0
+offset_right = 1013.0
+offset_bottom = 104.0
 
 [connection signal="gui_input" from="UIController/MainView" to="UIController" method="_on_main_view_gui_input"]
 [connection signal="text_submitted" from="UIController/SendText" to="UIController" method="_on_send_text_text_submitted"]

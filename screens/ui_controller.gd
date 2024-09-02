@@ -4,8 +4,21 @@ class_name UIController
 @export var rich_text:RichTextLabel
 @export var send_text:LineEdit
 @export var player_inventory:PlayerInventory
+@export var name_label:Label
 
+@export var hp_bar:StatsBar
+@export var mp_bar:StatsBar
+@export var sta_bar:StatsBar
+@export var thirst_bar:StatsBar
+@export var hunger_bar:StatsBar
+@export var experience_bar:StatsBar
 
+var player_data:PlayerData
+
+func set_player_data(p_player_data:PlayerData) -> void:
+	player_data = p_player_data 
+	player_data.property_changed.connect(on_player_property_changed)
+	
 func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
 	
@@ -16,7 +29,6 @@ func add_to_console(message:String, color:Color, bold:bool, italic:bool) -> void
 	if bold:
 		message = "[b]%s[/b]" % message  
 	rich_text.append_text(message + "\n")
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -65,6 +77,25 @@ func _on_send_text_text_submitted(new_text: String) -> void:
 	p.message = new_text
 	SessionManager.send_packet(p)
 
+func on_player_property_changed(property_name:String) -> void:
+	match property_name:
+		"name":
+			set_player_name(player_data.name)
+		"hp", "max_hp":
+			hp_bar.set_bar_value(player_data.hp, player_data.max_hp)
+		"mp", "max_mp":
+			mp_bar.set_bar_value(player_data.mp, player_data.max_mp)
+		"sta", "max_sta":
+			sta_bar.set_bar_value(player_data.sta, player_data.max_sta)
+		"thirst":
+			thirst_bar.set_bar_value(player_data.thirst, 100)
+		"hunger":
+			hunger_bar.set_bar_value(player_data.hunger, 100)
+		"experience", "experience_for_next_level":
+			experience_bar.set_bar_value(player_data.experience, player_data.experience_for_next_level)
+		_:
+			print(property_name) 
+
 func equip_object() -> void:
 	var selected_slot = player_inventory.inventory_container.selected_slot
 	if selected_slot >= 0 && selected_slot < Declares.MAX_INVENTORY_SLOTS_SERVER:
@@ -87,3 +118,6 @@ func use_object() -> void:
 		var p = UseItemRequest.new()
 		p.slot = selected_slot + 1
 		SessionManager.send_packet(p) 
+
+func set_player_name(p_name:String) -> void:
+	name_label.text = p_name
