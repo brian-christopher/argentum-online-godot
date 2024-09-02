@@ -305,7 +305,7 @@ func handle_change_inventory_slot(p:ChangeInventorySlotResponse) -> void:
 	player_data.inventory.set_item_stack(p.slot - 1, item_stack)
 	
 func handle_change_spell_slot(p:ChangeSpellSlotResponse) -> void:
-	pass
+	player_data.set_spell(p.slot -1, p.id, p.name)
 
 func handle_update_tag_and_status(p:UpdateTagAndStatusResponse) -> void:
 	var character = world.get_character_by_id(p.char_index)

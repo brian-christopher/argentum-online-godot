@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2ox3dxvm6hoa"]
+
+[ext_resource type="Script" path="res://ui/spells_container.gd" id="1_nwnvj"]
+
+[node name="SpellsContainer" type="PanelContainer" node_paths=PackedStringArray("item_list")]
+custom_minimum_size = Vector2(200, 240)
+offset_right = 200.0
+offset_bottom = 240.0
+script = ExtResource("1_nwnvj")
+item_list = NodePath("MarginContainer/VBoxContainer/SpellList")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="SpellList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cast" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Lanzar"
+
+[node name="Info" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+focus_mode = 0
+text = "Info"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 8
+text = "+"
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/Buttons/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 8
+text = "-"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Cast" to="." method="_on_cast_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Info" to="." method="_on_info_pressed"]

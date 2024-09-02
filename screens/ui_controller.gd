@@ -3,7 +3,6 @@ class_name UIController
 
 @export var rich_text:RichTextLabel
 @export var send_text:LineEdit
-@export var player_inventory:PlayerInventory
 @export var name_label:Label
 @export var level_label:Label
 @export var gold_label:Label
@@ -15,11 +14,15 @@ class_name UIController
 @export var hunger_bar:StatsBar
 @export var experience_bar:StatsBar
 
+@export var player_inventory:PlayerInventory
+@export var spells_container:SpellsContainer
 var player_data:PlayerData
 
 func set_player_data(p_player_data:PlayerData) -> void:
 	player_data = p_player_data 
 	player_data.property_changed.connect(on_player_property_changed)
+	
+	spells_container.initialize(player_data, self)
 	
 func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")

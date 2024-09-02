@@ -2,12 +2,17 @@ extends RefCounted
 class_name PlayerData
 
 signal property_changed(property_name:String)
+signal spell_changed(slot:int, id:int, name:String)
+
 
 var inventory:Inventory
 var user_navegando:bool
+var spells:Array[SpellData]
 
 func _init() -> void:
 	inventory = Inventory.new(Declares.MAX_INVENTORY_SLOTS)
+	spells.resize(Declares.MAXHECHI)
+	spells.fill(SpellData.new(0, "(None)"))
 	
 var gold:int:
 	get:
@@ -99,3 +104,7 @@ var hunger:int:
 	set(value):
 		hunger = value
 		property_changed.emit("hunger")
+
+func set_spell(slot:int, spell_id:int, spell_name:String) -> void:
+	spells[slot] = SpellData.new(spell_id, spell_name)
+	spell_changed.emit(slot, spell_id, spell_name)
