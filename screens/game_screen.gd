@@ -185,6 +185,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				handle_character_change(CharacterChangeResponse.unpack(stream))
 			Enums.ServerPacketID.UpdateSta:
 				handle_update_sta(UpdateStaResponse.unpack(stream))
+			Enums.ServerPacketID.UpdateMana:
+				handle_update_mana(stream.get_16())
 			Enums.ServerPacketID.PosUpdate:
 				handle_pos_update(PosUpdateResponse.unpack(stream))
 			Enums.ServerPacketID.BlockPosition:
@@ -368,6 +370,9 @@ func update_hunger_and_thrist(p:UpdateHungerAndThirstResponse) -> void:
 
 func handle_update_exp(experience:int) -> void:
 	player_data.experience = experience
+
+func handle_update_mana(mana:int) -> void:
+	player_data.mp = mana
 
 func handle_guild_chat(message:String) -> void:
 	pass

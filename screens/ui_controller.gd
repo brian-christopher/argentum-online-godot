@@ -5,6 +5,8 @@ class_name UIController
 @export var send_text:LineEdit
 @export var player_inventory:PlayerInventory
 @export var name_label:Label
+@export var level_label:Label
+@export var gold_label:Label
 
 @export var hp_bar:StatsBar
 @export var mp_bar:StatsBar
@@ -48,6 +50,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		hide_player()
 	if event.is_action_pressed("use_object"):
 		use_object()
+	if event.is_action_pressed("meditate"):
+		meditate()
 			
 func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -> Vector2:
 	return (transform_2d.inverse() * mouse_position / Declares.TILE_SIZE).ceil()
@@ -93,6 +97,10 @@ func on_player_property_changed(property_name:String) -> void:
 			hunger_bar.set_bar_value(player_data.hunger, 100)
 		"experience", "experience_for_next_level":
 			experience_bar.set_bar_value(player_data.experience, player_data.experience_for_next_level)
+		"level":
+			level_label.text = "Level: %d" % player_data.level
+		"gold":
+			gold_label.text = str(player_data.gold)
 		_:
 			print(property_name) 
 
@@ -118,6 +126,10 @@ func use_object() -> void:
 		var p = UseItemRequest.new()
 		p.slot = selected_slot + 1
 		SessionManager.send_packet(p) 
+		
+func meditate() -> void:
+	if player_data.max_mp != 0:
+		SessionManager.send_packet(MeditateRequest.new()) 
 
 func set_player_name(p_name:String) -> void:
 	name_label.text = p_name

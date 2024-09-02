@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbsfihxi387kv"]
+[gd_scene load_steps=9 format=3 uid="uid://dbsfihxi387kv"]
 
 [ext_resource type="Script" path="res://screens/game_screen.gd" id="1_hpf24"]
 [ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_dgea5"]
 [ext_resource type="PackedScene" uid="uid://cvqfqx1267dq1" path="res://scenes/world.tscn" id="3_drqlh"]
 [ext_resource type="PackedScene" uid="uid://bij1hr2x2ioha" path="res://ui/stats_bar.tscn" id="5_74buj"]
 [ext_resource type="PackedScene" uid="uid://c3as2dgbfsjwj" path="res://ui/player_inventory.tscn" id="6_12hwq"]
+[ext_resource type="Texture2D" uid="uid://b87oulnrqoohi" path="res://assets/textures/510.png" id="6_wiyuk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1nye1"]
 font_size = 20
@@ -19,12 +20,14 @@ main_camera = NodePath("UIController/MainView/SubViewport/MainCamera")
 world = NodePath("UIController/MainView/SubViewport/World")
 player_inventory = NodePath("UIController/PlayerInventory")
 
-[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "player_inventory", "name_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar")]
+[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "player_inventory", "name_label", "level_label", "gold_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar")]
 script = ExtResource("2_dgea5")
 rich_text = NodePath("RichTextColor/RichText")
 send_text = NodePath("SendText")
 player_inventory = NodePath("PlayerInventory")
 name_label = NodePath("Name")
+level_label = NodePath("Level")
+gold_label = NodePath("Gold")
 hp_bar = NodePath("StatBars/HPBar")
 mp_bar = NodePath("StatBars/MPBar")
 sta_bar = NodePath("StatBars/STABar")
@@ -93,9 +96,9 @@ scroll_following = true
 [node name="PlayerInventory" parent="UIController" instance=ExtResource("6_12hwq")]
 custom_minimum_size = Vector2(200, 240)
 offset_left = 792.0
-offset_top = 173.0
+offset_top = 199.0
 offset_right = 992.0
-offset_bottom = 413.0
+offset_bottom = 439.0
 
 [node name="Name" type="Label" parent="UIController"]
 offset_left = 781.0
@@ -110,9 +113,9 @@ clip_text = true
 
 [node name="StatBars" type="VBoxContainer" parent="UIController"]
 offset_left = 792.0
-offset_top = 448.0
+offset_top = 488.0
 offset_right = 992.0
-offset_bottom = 694.0
+offset_bottom = 734.0
 metadata/_edit_group_ = true
 
 [node name="Energia" type="Label" parent="UIController/StatBars"]
@@ -169,9 +172,37 @@ layout_mode = 2
 
 [node name="ExperienceBar" parent="UIController" instance=ExtResource("5_74buj")]
 offset_left = 781.0
-offset_top = 77.0
+offset_top = 87.0
 offset_right = 1013.0
-offset_bottom = 104.0
+offset_bottom = 114.0
+
+[node name="Level" type="Label" parent="UIController"]
+offset_left = 781.0
+offset_top = 50.0
+offset_right = 1002.0
+offset_bottom = 73.0
+text = "Level: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="GoldIcon" type="TextureRect" parent="UIController"]
+offset_left = 792.0
+offset_top = 445.0
+offset_right = 824.0
+offset_bottom = 477.0
+texture = ExtResource("6_wiyuk")
+expand_mode = 1
+
+[node name="Gold" type="Label" parent="UIController"]
+self_modulate = Color(1, 1, 0.0745098, 1)
+offset_left = 828.0
+offset_top = 451.0
+offset_right = 978.0
+offset_bottom = 474.0
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
 
 [connection signal="gui_input" from="UIController/MainView" to="UIController" method="_on_main_view_gui_input"]
 [connection signal="text_submitted" from="UIController/SendText" to="UIController" method="_on_send_text_text_submitted"]
