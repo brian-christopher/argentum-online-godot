@@ -77,8 +77,7 @@ func create_item(x:int, y:int, grh_id:int) -> void:
 		
 	var sprite = Sprite2D.new()  
 	sprite.region_enabled = true
-	sprite.region_rect = grh.region
-	sprite.self_modulate = Color.BROWN
+	sprite.region_rect = grh.region 
 	sprite.texture = ContentManager.get_texture(grh.file_num)
 	sprite.position = Vector2(((x - 1) * 32) + 16, ((y - 1) * 32) + 32)
 	sprite.offset = Vector2(0, -sprite.region_rect.size.y / 2) 

@@ -7,6 +7,7 @@ signal spell_changed(slot:int, id:int, name:String)
 
 var inventory:Inventory
 var user_navegando:bool
+var using_skill:int 
 var spells:Array[SpellData]
 
 func _init() -> void:

@@ -23,7 +23,7 @@ func set_player_data(p_player_data:PlayerData) -> void:
 	player_data = p_player_data 
 	player_data.property_changed.connect(on_player_property_changed)
 	
-	spells_container.initialize(player_data, self) 
+	spells_container.initialize(player_data, self)  
 	
 func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
@@ -63,17 +63,27 @@ func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -
 func _on_main_view_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var mouse_position = get_tile_mouse_position(%MainCamera.get_canvas_transform(), event.position) 
-		if event.pressed:
-			var p = LeftClickRequest.new()
-			p.x = mouse_position.x
-			p.y = mouse_position.y 
-			SessionManager.send_packet(p)
-			
-		if event.double_click:
-			var p = DoubleClickRequest.new()
-			p.x = mouse_position.x
-			p.y = mouse_position.y 
-			SessionManager.send_packet(p)
+		
+		if event.double_click && event.pressed:
+			SessionManager.send_packet(DoubleClickRequest.new(
+				mouse_position.x,
+				mouse_position.y
+			)) 
+			return
+		
+		if player_data.using_skill == Enums.Skill.NONE && event.pressed:
+			SessionManager.send_packet(LeftClickRequest.new(
+				mouse_position.x,
+				mouse_position.y
+			)) 
+		else:
+			SessionManager.send_packet(WorkLeftClickRequest.new(
+				mouse_position.x,
+				mouse_position.y,
+				player_data.using_skill
+			)) 
+			set_mouse_cursor_shape(Control.CURSOR_ARROW)
+			player_data.using_skill = Enums.Skill.NONE
 				
 func _on_send_text_text_submitted(new_text: String) -> void:
 	if new_text.is_empty():
@@ -108,8 +118,8 @@ func on_player_property_changed(property_name:String) -> void:
 		_:
 			print(property_name) 
 			
-func set_mouse_cursor_shape(shape:Control.CursorShape) -> void:
-	view_container.mouse_default_cursor_shape = shape
+func set_mouse_cursor_shape(shape:int) -> void:
+	Input.set_default_cursor_shape(shape) 
 
 func equip_object() -> void:
 	var selected_slot = player_inventory.inventory_container.selected_slot

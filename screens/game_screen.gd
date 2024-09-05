@@ -380,7 +380,24 @@ func handle_guild_chat(message:String) -> void:
 	pass
 
 func Handle_work_request_target(p:WorkRequestTargetResponse) -> void:
-	pass
+	ui_controller.set_mouse_cursor_shape(Control.CURSOR_MOVE)
+	player_data.using_skill = p.using_skill 
+	var color = Color8(100, 100, 120)
+	match p.using_skill:
+		Enums.Skill.MAGIA:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_MAGIA, color, false, false)
+		Enums.Skill.PESCA:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_PESCA, color, false, false)
+		Enums.Skill.ROBAR:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_ROBAR, color, false, false)
+		Enums.Skill.TALAR:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_TALAR, color, false, false)
+		Enums.Skill.MINERIA:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_MINERIA, color, false, false)
+		Enums.Skill.FUNDIR_METAL:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_FUNDIRMETAL, color, false, false)
+		Enums.Skill.PROYECTILES:
+			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_PROYECTILES, color, false, false)
 
 func handle_logged(username:String) -> void:
 	player_data.name = username

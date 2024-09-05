@@ -436,6 +436,7 @@ enum FontTypeNames{
 }
 
 enum Skill{
+	NONE = 0,
 	SUERTE = 1,
 	MAGIA = 2,
 	ROBAR = 3,
@@ -456,7 +457,10 @@ enum Skill{
 	DOMAR = 18,
 	PROYECTILES = 19,
 	WRESTLING = 20,
-	NAVEGACION = 21
+	NAVEGACION = 21,
+	
+	#ESPECIALES#
+	FUNDIR_METAL = 88
 }
 
 
