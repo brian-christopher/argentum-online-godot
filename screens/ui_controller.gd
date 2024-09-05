@@ -23,6 +23,7 @@ func set_player_data(p_player_data:PlayerData) -> void:
 	player_data = p_player_data 
 	player_data.property_changed.connect(on_player_property_changed)
 	
+	player_inventory.set_player_data(player_data)
 	spells_container.initialize(player_data, self)  
 	
 func append_text(text:String) -> void:

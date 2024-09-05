@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6jdn61u1hwmu"]
+[gd_scene load_steps=5 format=3 uid="uid://c6jdn61u1hwmu"]
 
 [ext_resource type="Script" path="res://screens/lobby_screen.gd" id="1_veh3v"]
 [ext_resource type="PackedScene" path="res://maps/map_34.tscn" id="2_524de"]
 [ext_resource type="PackedScene" uid="uid://gmswmngcmj42" path="res://ui/login_panel.tscn" id="3_brwm8"]
+[ext_resource type="AudioStream" uid="uid://dkq4yy3gwlx7p" path="res://assets/musics/7.mp3" id="4_g1ib8"]
 
 [node name="LobbyScreen" type="Node" node_paths=PackedStringArray("login_panel")]
 script = ExtResource("1_veh3v")
@@ -57,6 +58,12 @@ offset_right = 154.5
 offset_bottom = 132.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_g1ib8")
+autoplay = true
+bus = &"music"
+parameters/looping = true
 
 [connection signal="error" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_error"]
 [connection signal="login_button_pressed" from="CanvasLayer/LoginPanel" to="." method="_on_login_panel_login_button_pressed"]

@@ -4,7 +4,7 @@ extends Node
 @export var main_camera:Camera2D
 @export var world:World
 
-@export var player_inventory:PlayerInventory 
+@export var music_stream_player:AudioStreamPlayer 
 
 var incoming_data:Array[PackedByteArray] 
 var main_character_index:int = -1
@@ -22,8 +22,7 @@ func _ready() -> void:
 	SessionManager.data.connect(on_session_manager_data)
 	SessionManager.disconnected.connect(on_session_manager_disconnected)
 	SessionManager.error.connect(on_session_manager_disconnected)
-	
-	player_inventory.set_player_data(player_data)
+	 
 	ui_controller.set_player_data(player_data)
 	 
 func on_session_manager_data(data:PackedByteArray) -> void:
@@ -332,7 +331,12 @@ func handle_change_map(p:ChangeMapResponse) -> void:
 	world.load_map(p.id)
 
 func handle_play_midi(p:PlayMIDIResponse) -> void:
-	pass
+	if p.id == 0:
+		music_stream_player.stop()
+		return
+		
+	music_stream_player.stream = load("res://assets/musics/%d.mp3" % p.id)
+	music_stream_player.play()
 
 func handle_area_change(p:AreaChangedResponse) -> void:
 	pass

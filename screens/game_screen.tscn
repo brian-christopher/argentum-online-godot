@@ -14,12 +14,12 @@ font_size = 20
 [sub_resource type="LabelSettings" id="LabelSettings_kyna6"]
 font_size = 12
 
-[node name="GameScreen" type="Node" node_paths=PackedStringArray("ui_controller", "main_camera", "world", "player_inventory")]
+[node name="GameScreen" type="Node" node_paths=PackedStringArray("ui_controller", "main_camera", "world", "music_stream_player")]
 script = ExtResource("1_hpf24")
 ui_controller = NodePath("UIController")
 main_camera = NodePath("UIController/MainView/SubViewport/MainCamera")
 world = NodePath("UIController/MainView/SubViewport/World")
-player_inventory = NodePath("UIController/MainPanel/PlayerInventory")
+music_stream_player = NodePath("Music")
 
 [node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "name_label", "level_label", "gold_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar", "player_inventory", "spells_container", "view_container")]
 script = ExtResource("2_dgea5")
@@ -229,6 +229,9 @@ layout_mode = 2
 [node name="SpellsContainer" parent="UIController/MainPanel" instance=ExtResource("7_y3n46")]
 visible = false
 layout_mode = 2
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+bus = &"music"
 
 [connection signal="gui_input" from="UIController/MainView" to="UIController" method="_on_main_view_gui_input"]
 [connection signal="text_submitted" from="UIController/SendText" to="UIController" method="_on_send_text_text_submitted"]
