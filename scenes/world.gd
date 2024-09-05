@@ -33,8 +33,10 @@ func create_character(data:CharacterCreateResponse) -> void:
 	if data.privileges != 0: 
 		if (data.privileges & Enums.PlayerType.CHAOS_COUNCIL) != 0 and (data.privileges &  Enums.PlayerType.USER) == 0:
 			data.privileges ^=  Enums.PlayerType.CHAOS_COUNCIL 
+		
 		if (data.privileges &  Enums.PlayerType.ROYAL_COUNCIL) != 0 and (data.privileges &  Enums.PlayerType.USER) == 0:
 			data.privileges ^=  Enums.PlayerType.ROYAL_COUNCIL 
+		
 		if data.privileges &  Enums.PlayerType.ROLE_MASTER:
 			data.privileges =  Enums.PlayerType.ROLE_MASTER 
 		data.privileges = log(data.privileges) / log(2)

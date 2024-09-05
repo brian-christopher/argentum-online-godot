@@ -165,6 +165,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass   	
 			Enums.ServerPacketID.RainToggle:
 				pass
+			Enums.ServerPacketID.WorkRequestTarget:
+				Handle_work_request_target(WorkRequestTargetResponse.unpack(stream))
 			Enums.ServerPacketID.NavigateToggle:
 				handle_navigate_toggle()
 			Enums.ServerPacketID.UpdateExp:
@@ -375,6 +377,9 @@ func handle_update_mana(mana:int) -> void:
 	player_data.mp = mana
 
 func handle_guild_chat(message:String) -> void:
+	pass
+
+func Handle_work_request_target(p:WorkRequestTargetResponse) -> void:
 	pass
 
 func handle_logged(username:String) -> void:

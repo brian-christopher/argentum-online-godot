@@ -16,13 +16,14 @@ class_name UIController
 
 @export var player_inventory:PlayerInventory
 @export var spells_container:SpellsContainer
+@export var view_container:SubViewportContainer
 var player_data:PlayerData
 
 func set_player_data(p_player_data:PlayerData) -> void:
 	player_data = p_player_data 
 	player_data.property_changed.connect(on_player_property_changed)
 	
-	spells_container.initialize(player_data, self)
+	spells_container.initialize(player_data, self) 
 	
 func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
@@ -106,6 +107,9 @@ func on_player_property_changed(property_name:String) -> void:
 			gold_label.text = str(player_data.gold)
 		_:
 			print(property_name) 
+			
+func set_mouse_cursor_shape(shape:Control.CursorShape) -> void:
+	view_container.mouse_default_cursor_shape = shape
 
 func equip_object() -> void:
 	var selected_slot = player_inventory.inventory_container.selected_slot
@@ -136,7 +140,6 @@ func meditate() -> void:
 
 func set_player_name(p_name:String) -> void:
 	name_label.text = p_name
-
 
 func _on_show_inventory_pressed() -> void:
 	spells_container.hide()
