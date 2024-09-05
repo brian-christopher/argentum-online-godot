@@ -345,7 +345,9 @@ func handle_set_invisible(p:SetInvisibleResponse) -> void:
 		character.visible = !p.invisible
 	
 func handle_create_fx(p:CreateFXResponse) -> void:
-	pass
+	var character = world.get_character_by_id(p.char_index)
+	if character:
+		character.character_fx.start_fx(p.fx, p.fx_loops)
 
 func handle_user_char_index_in_server(char_index:int) -> void:
 	main_character_index = char_index

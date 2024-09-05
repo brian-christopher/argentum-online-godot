@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn5ejjhc1ilkd"]
+[gd_scene load_steps=6 format=3 uid="uid://bn5ejjhc1ilkd"]
 
 [ext_resource type="Script" path="res://scenes/character/character_controller.gd" id="1_4jcfo"]
+[ext_resource type="PackedScene" uid="uid://eexl4ynp5g2s" path="res://scenes/character/character_fx.tscn" id="3_dwno2"]
 [ext_resource type="PackedScene" uid="uid://c5ayda1k1ew1p" path="res://scenes/character/character_renderer.tscn" id="3_jqbfg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bf7nj"]
@@ -9,12 +10,15 @@ font_size = 14
 [sub_resource type="LabelSettings" id="LabelSettings_luv78"]
 font_size = 12
 
-[node name="Character" type="Node2D" node_paths=PackedStringArray("renderer")]
+[node name="Character" type="Node2D" node_paths=PackedStringArray("renderer", "character_fx")]
 script = ExtResource("1_4jcfo")
 renderer = NodePath("CharacterRenderer")
+character_fx = NodePath("CharacterFx")
 
 [node name="CharacterRenderer" parent="." instance=ExtResource("3_jqbfg")]
 position = Vector2(0, -12)
+
+[node name="CharacterFx" parent="." instance=ExtResource("3_dwno2")]
 
 [node name="Name" type="Label" parent="."]
 unique_name_in_owner = true

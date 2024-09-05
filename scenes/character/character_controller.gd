@@ -1,6 +1,7 @@
 extends Node2D
 class_name CharacterController
 @export var renderer:CharacterRenderer
+@export var character_fx:CharacterFx
 
 var char_index:int
 var grid_position:Vector2i
