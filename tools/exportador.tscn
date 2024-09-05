@@ -68,9 +68,15 @@ layout_mode = 2
 focus_mode = 0
 text = "Escudos"
 
+[node name="Button7" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "FX"
+
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button" to="." method="export_maps"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button2" to="." method="export_bodies"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button3" to="." method="export_heads"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button4" to="." method="export_helmets"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button5" to="." method="export_weapons"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Button6" to="." method="export_shields"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Button7" to="." method="export_fxs"]

@@ -1,0 +1,83 @@
+[gd_resource type="SpriteFrames" load_steps=12 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/138.png" id="1_uv45e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhpxt"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc183"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvgv2"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u77ac"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trty2"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4f681"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwhtm"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rblrd"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_32mq8"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nj70e"]
+atlas = ExtResource("1_uv45e")
+region = Rect2(256, 64, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhpxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dc183")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvgv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u77ac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trty2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4f681")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwhtm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rblrd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_32mq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nj70e")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
+metadata/offset_x = 0
+metadata/offset_y = 0

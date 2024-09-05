@@ -279,3 +279,32 @@ func export_map(id:int) -> void:
 func export_maps() -> void:
 	for i in range(1, 282 + 1):
 		export_map(i)
+
+func export_fxs() -> void:
+	var stream = StreamPeerBuffer.new()
+	stream.data_array = FileAccess.get_file_as_bytes("res://assets/init/fxs.ind")
+	stream.get_data(255 + 4 + 4)
+	
+	var count = stream.get_16()
+	for i in range(1, count + 1):
+		var grh_id = stream.get_16()
+		var offset_x = stream.get_16()
+		var offset_y = stream.get_16()
+		
+		var sprite_frames = SpriteFrames.new()
+		sprite_frames.set_meta("offset_x", offset_x)
+		sprite_frames.set_meta("offset_y", offset_y)
+		sprite_frames.set_animation_loop("default", false)
+		sprite_frames.set_animation_speed("default", 12);	
+		
+		var grh = ContentManager.grh_data[grh_id]
+		for frame_id in range(1, grh.frames_count + 1):
+			var frame = ContentManager.grh_data[grh.frames[frame_id]]
+			
+			var atlas_texture = AtlasTexture.new()
+			atlas_texture.atlas = ContentManager.get_texture(frame.file_num)
+			atlas_texture.region = frame.region
+			sprite_frames.add_frame("default", atlas_texture) 
+			
+		ResourceSaver.save(sprite_frames, "res://resources/fxs/fx_%d.tres" % i)
+	
