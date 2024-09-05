@@ -19,6 +19,10 @@ func load_map(id:int) -> void:
 func add_overlap_entity(node:Node) -> void:
 	if map_view:
 		map_view.get_node("Layer3").add_child(node)
+
+func add_to_layer_2(node:Node) -> void:
+	if map_view:
+		map_view.get_node("Layer2").add_child(node)
 		
 func is_tile_blocked(x:int, y:int, fixed:bool = true) -> bool: 
 	if fixed:

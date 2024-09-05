@@ -82,7 +82,11 @@ func create_item(x:int, y:int, grh_id:int) -> void:
 	sprite.position = Vector2(((x - 1) * 32) + 16, ((y - 1) * 32) + 32)
 	sprite.offset = Vector2(0, -sprite.region_rect.size.y / 2) 
 	
-	map.add_overlap_entity(sprite)
+	if grh.region.size == Vector2(32, 32):
+		map.add_to_layer_2(sprite)
+	else:
+		map.add_overlap_entity(sprite)
+	
 	items.get_or_add(Vector2i(x, y), sprite)
 	
 func delete_item(x:int, y:int) -> void:
