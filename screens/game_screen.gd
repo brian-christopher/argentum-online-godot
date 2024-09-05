@@ -165,6 +165,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass   	
 			Enums.ServerPacketID.RainToggle:
 				pass
+			Enums.ServerPacketID.MeditateToggle:
+				pass
 			Enums.ServerPacketID.WorkRequestTarget:
 				Handle_work_request_target(WorkRequestTargetResponse.unpack(stream))
 			Enums.ServerPacketID.NavigateToggle:
