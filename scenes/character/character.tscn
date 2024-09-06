@@ -19,6 +19,7 @@ character_fx = NodePath("CharacterFx")
 position = Vector2(0, -12)
 
 [node name="CharacterFx" parent="." instance=ExtResource("3_dwno2")]
+self_modulate = Color(1, 1, 1, 0.588235)
 
 [node name="Name" type="Label" parent="."]
 unique_name_in_owner = true
