@@ -30,6 +30,7 @@ func on_session_manager_data(data:PackedByteArray) -> void:
 
 func on_session_manager_disconnected() -> void:
 	var screen = load("res://screens/lobby_screen.tscn").instantiate() 
+	SessionManager.disconnect_from_server()
 	ScreenManager.switch_screen(screen) 
 
 func _process(delta: float) -> void:
