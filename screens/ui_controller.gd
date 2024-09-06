@@ -26,6 +26,8 @@ func set_player_data(p_player_data:PlayerData) -> void:
 	player_inventory.set_player_data(player_data)
 	spells_container.initialize(player_data, self)  
 	
+	get_node("NpcInventory").initialize(player_data)
+	
 func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
 	
@@ -151,6 +153,13 @@ func meditate() -> void:
 
 func set_player_name(p_name:String) -> void:
 	name_label.text = p_name
+
+func show_npc_inventory() -> void:
+	get_node("NpcInventory").show()
+	get_node("NpcInventory").quantity = 1
+
+func hide_npc_inventory() -> void:
+	get_node("NpcInventory").hide()
 
 func _on_show_inventory_pressed() -> void:
 	spells_container.hide()

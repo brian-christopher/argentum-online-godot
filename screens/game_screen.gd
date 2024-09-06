@@ -152,6 +152,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass
 			Enums.ServerPacketID.DumbNoMore:
 				pass
+			Enums.ServerPacketID.TradeOK:
+				pass
 			Enums.ServerPacketID.UserIndexInServer:
 				stream.get_16()
 			Enums.ServerPacketID.DumbNoMore:
@@ -166,6 +168,10 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass
 			Enums.ServerPacketID.MeditateToggle:
 				pass
+			Enums.ServerPacketID.CommerceInit:
+				handle_commerce_init()
+			Enums.ServerPacketID.CommerceEnd:
+				handle_commerce_end()				
 			Enums.ServerPacketID.WorkRequestTarget:
 				Handle_work_request_target(WorkRequestTargetResponse.unpack(stream))
 			Enums.ServerPacketID.NavigateToggle:
@@ -238,6 +244,8 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				handle_change_map(ChangeMapResponse.unpack(stream)) 
 			Enums.ServerPacketID.ChangeInventorySlot:
 				handle_change_inventory_slot(ChangeInventorySlotResponse.unpack(stream))
+			Enums.ServerPacketID.ChangeNPCInventorySlot:
+				handle_change_npc_inventory_slot(ChangeNPCInventorySlotResponse.unpack(stream))
 			Enums.ServerPacketID.ChangeSpellSlot:
 				handle_change_spell_slot(ChangeSpellSlotResponse.unpack(stream))
 			Enums.ServerPacketID.RemoveCharDialog:
@@ -299,13 +307,25 @@ func handle_change_inventory_slot(p:ChangeInventorySlotResponse) -> void:
 	item.id = p.obj_index
 	item.max_hit = p.max_hit
 	item.min_hit = p.min_hit
-	item.type = p.obj_type 
-	
-	if item.grh_id:
-		item.icon = ContentManager.get_texture_from_grh(item.grh_id)
+	item.price = p.value 
+	item.icon = ContentManager.get_texture_from_grh(item.grh_id)
 	
 	var item_stack = ItemStack.new(item, p.amount, p.equipped)
 	player_data.inventory.set_item_stack(p.slot - 1, item_stack)
+	
+func handle_change_npc_inventory_slot(p:ChangeNPCInventorySlotResponse) -> void:
+	var item = Item.new()
+	item.name = p.name
+	item.type = p.obj_type
+	item.defense = p.defense
+	item.grh_id = p.grh_index
+	item.id = p.obj_index
+	item.max_hit = p.max_hit
+	item.min_hit = p.min_hit
+	item.price = p.value 
+	item.icon = ContentManager.get_texture_from_grh(item.grh_id)
+		
+	player_data.npc_inventory.set_item_stack(p.slot - 1, ItemStack.new(item, p.amount, false))
 	
 func handle_change_spell_slot(p:ChangeSpellSlotResponse) -> void:
 	player_data.set_spell(p.slot -1, p.id, p.name)
@@ -412,6 +432,14 @@ func handle_logged(username:String) -> void:
 
 func handle_navigate_toggle() -> void:
 	player_data.user_navegando = !player_data.user_navegando
+
+func handle_commerce_init() -> void:
+	ui_controller.show_npc_inventory()
+	player_data.comerciando = true
+
+func handle_commerce_end() -> void:
+	ui_controller.hide_npc_inventory()
+	player_data.comerciando = false
 
 func handle_show_message_box(message:String) -> void:
 	if message.to_lower().contains("inactivo"):

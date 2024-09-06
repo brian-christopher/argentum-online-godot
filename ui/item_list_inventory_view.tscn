@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bydfd0atxlv27"]
+
+[ext_resource type="Script" path="res://ui/item_list_inventory_view.gd" id="4_nrir0"]
+
+[node name="ItemListInventoryView" type="ItemList"]
+custom_minimum_size = Vector2(230, 0)
+offset_right = 232.0
+offset_bottom = 304.0
+focus_mode = 0
+script = ExtResource("4_nrir0")

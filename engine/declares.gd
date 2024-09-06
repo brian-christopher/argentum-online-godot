@@ -1,9 +1,10 @@
 extends RefCounted
 class_name Declares 
 
-const NUMSKILLS = 21;  
-const MAXHECHI = 35;
-const MAX_INVENTORY_SLOTS = 30; 
+const NUMSKILLS = 21  
+const MAXHECHI = 35
+const MAX_INVENTORY_SLOTS = 30 
+const MAX_NPC_INVENTORY_SLOTS = 50
 const MAX_INVENTORY_SLOTS_SERVER = 20
 const NUMATRIBUTES = 5
 

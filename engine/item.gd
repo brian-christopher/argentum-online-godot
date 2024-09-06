@@ -7,6 +7,7 @@ var id:int
 
 var type:int
 var name:String
+var price:int
 
 var min_hit:int
 var max_hit:int

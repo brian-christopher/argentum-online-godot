@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dbsfihxi387kv"]
+[gd_scene load_steps=11 format=3 uid="uid://dbsfihxi387kv"]
 
 [ext_resource type="Script" path="res://screens/game_screen.gd" id="1_hpf24"]
 [ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_dgea5"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c3as2dgbfsjwj" path="res://ui/player_inventory.tscn" id="6_12hwq"]
 [ext_resource type="Texture2D" uid="uid://b87oulnrqoohi" path="res://assets/textures/510.png" id="6_wiyuk"]
 [ext_resource type="PackedScene" uid="uid://c2ox3dxvm6hoa" path="res://ui/spells_container.tscn" id="7_y3n46"]
+[ext_resource type="PackedScene" uid="uid://bmsv0xijnvsfe" path="res://ui/npc_inventory_panel.tscn" id="8_p571h"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1nye1"]
 font_size = 20
@@ -229,6 +230,20 @@ layout_mode = 2
 [node name="SpellsContainer" parent="UIController/MainPanel" instance=ExtResource("7_y3n46")]
 visible = false
 layout_mode = 2
+
+[node name="NpcInventory" parent="UIController" instance=ExtResource("8_p571h")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -268.5
+offset_right = 271.5
+offset_bottom = 268.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 bus = &"music"

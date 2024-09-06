@@ -13,10 +13,10 @@ class MapObject:
 	var y:int
 	var grh_id:int
 	
-	func _init(x:int, y:int, grh_id:int) -> void:
-		self.x = x
-		self.y = y
-		self.grh_id = grh_id
+	func _init(p_x:int, p_y:int, p_grh_id:int) -> void:
+		x = p_x
+		y = p_y
+		grh_id = p_grh_id
 	
 class MapData:
 	var layer1:PackedInt32Array

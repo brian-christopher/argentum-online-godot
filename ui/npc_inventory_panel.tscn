@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmsv0xijnvsfe"]
+
+[ext_resource type="Script" path="res://ui/npc_inventory_panel.gd" id="1_58up1"]
+[ext_resource type="PackedScene" uid="uid://bydfd0atxlv27" path="res://ui/item_list_inventory_view.tscn" id="2_xbdva"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wo33i"]
+bg_color = Color(0.152748, 0.152748, 0.152748, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihx4a"]
+font_size = 40
+
+[node name="NpcInventoryPanel" type="Panel" node_paths=PackedStringArray("npc_inventory_list", "player_inventory_list")]
+custom_minimum_size = Vector2(415, 472)
+offset_right = 543.0
+offset_bottom = 472.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wo33i")
+script = ExtResource("1_58up1")
+npc_inventory_list = NodePath("NpcInventoryList")
+player_inventory_list = NodePath("PlayerInventoryList")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -92.0
+offset_right = 92.0
+offset_bottom = 55.0
+grow_horizontal = 2
+text = "Comercio"
+label_settings = SubResource("LabelSettings_ihx4a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NpcInventoryList" parent="." instance=ExtResource("2_xbdva")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -152.0
+offset_right = 230.0
+offset_bottom = 152.0
+grow_vertical = 2
+
+[node name="PlayerInventoryList" parent="." instance=ExtResource("2_xbdva")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -152.0
+offset_right = 0.0
+offset_bottom = 152.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Buy" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -65.0
+offset_right = 205.0
+offset_bottom = -31.0
+grow_vertical = 0
+text = "Comprar"
+
+[node name="Sell" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -207.0
+offset_top = -65.0
+offset_right = -27.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Vender"
+
+[node name="Quantity" type="SpinBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.5
+offset_top = -65.0
+offset_right = 41.5
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 10000.0
+value = 1.0
+alignment = 1
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -31.0
+offset_bottom = 35.0
+grow_horizontal = 0
+text = "X"
+
+[connection signal="pressed" from="Buy" to="." method="_on_buy_pressed"]
+[connection signal="pressed" from="Sell" to="." method="_on_sell_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
