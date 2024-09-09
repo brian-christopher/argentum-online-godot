@@ -17,6 +17,13 @@ static func _static_init() -> void:
     add_command("meditar", _command_meditate)
     add_command("retirar", _command_bank_extract_gold)
     add_command("depositar", _command_bank_deposit_gold)
+    add_command("est", _command_request_stats)
+    add_command("enlistar", _command_enlist)
+    add_command("informacion", _command_information)
+    add_command("recompensa", _command_reward)
+    add_command("denunciar", _command_denounce)
+    add_command("desc", _command_change_description)
+    add_command("gm", _command_gm_request)
 
 static func add_command(command_name: String, command_handler: Callable) -> void:
     _commands[command_name] = command_handler
@@ -39,13 +46,10 @@ static func parse_user_command(raw_command: String, player_data: PlayerData, ui_
         if _commands.has(command):
             _commands[command].call(command_args)
             
-
     elif raw_command.begins_with("\\"):
         pass
-
     elif raw_command.begins_with("-"):
         pass
-
     else:
         SessionManager.send_packet(TalkRequest.new(raw_command.substr(1)))
 
@@ -110,3 +114,47 @@ static func _command_bank_deposit_gold(args: CommandArgs) -> void:
     else: 
         var quantity := args.parameters[0].to_int()
         SessionManager.send_packet(BankDepositGoldRequest.new(quantity))
+
+
+static func _command_request_stats(_args: CommandArgs) -> void:
+    SessionManager.send_packet(SendSinglePacketRequest \
+        .new(Enums.ClientPacketID.RequestStats))     
+
+
+static func _command_enlist(_args: CommandArgs) -> void:
+    SessionManager.send_packet(SendSinglePacketRequest \
+        .new(Enums.ClientPacketID.Enlist))     
+
+static func _command_information(_args: CommandArgs) -> void:
+    SessionManager.send_packet(SendSinglePacketRequest \
+        .new(Enums.ClientPacketID.Information))     
+
+
+static func _command_reward(_args: CommandArgs) -> void:
+    SessionManager.send_packet(SendSinglePacketRequest \
+        .new(Enums.ClientPacketID.Reward))     
+
+
+static func _command_denounce(args: CommandArgs) -> void:
+    if args.parameters.is_empty():
+        args.ui_controller.add_to_console("Formule su denuncia.", Color.GRAY)
+    else:
+        SessionManager.send_packet(DenounceRequest \
+            .new(args.parameters[0]))  
+    
+
+static func _command_change_description(args: CommandArgs) -> void:
+    if not args.player_data.is_alive:
+        args.ui_controller.add_to_console("¡¡Estás muerto!!", Color.GRAY)
+    else:
+        var description := "" 
+        if not args.parameters.is_empty():
+            description = args.parameters[0]
+
+        SessionManager.send_packet(ChangeDescriptionRequest \
+            .new(description))
+
+
+static func _command_gm_request(_args: CommandArgs) -> void:
+    SessionManager.send_packet(SendSinglePacketRequest \
+        .new(Enums.ClientPacketID.GMRequest))    
