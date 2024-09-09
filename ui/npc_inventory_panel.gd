@@ -12,7 +12,7 @@ var quantity:int:
  
 func initialize(game_data:PlayerData) -> void:
 	npc_inventory_list.set_inventory(game_data.npc_inventory) 
-	player_inventory_list.set_inventory(game_data.inventory)
+	player_inventory_list.set_inventory(game_data.player_inventory)
  
 func _on_buy_pressed() -> void: 
 	var selected_item = npc_inventory_list.get_selected_item()

@@ -33,7 +33,7 @@ func on_session_manager_disconnected() -> void:
 	SessionManager.disconnect_from_server()
 	ScreenManager.switch_screen(screen) 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	check_keys()
 	camera_follow_player()
 			
@@ -98,7 +98,7 @@ func move_to(character:CharacterController, heading:int) -> void:
 			p.heading = heading
 			SessionManager.send_packet(p)
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	process_incoming_data()
 	
 func camera_follow_player() -> void:
@@ -118,7 +118,7 @@ func do_pasos_fx(character:CharacterController) -> void:
 		pass
 	#	play_sound("50.wav")
 	
-func play_sound(filename:String, pos:Vector2 = Vector2.ZERO) -> void:
+func play_sound(filename:String, _pos:Vector2 = Vector2.ZERO) -> void:
 	var audio_stream = AudioStreamPlayer.new()
 	audio_stream.stream = load("res://assets/sounds/" + filename)
 	audio_stream.bus = "sound"
@@ -147,117 +147,174 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 			Enums.ServerPacketID.Logged:
 				handle_logged(stream.get_utf8_string())
 				pass
+
 			Enums.ServerPacketID.ResuscitationSafeOff:
 				pass
+
 			Enums.ServerPacketID.ResuscitationSafeOn:
 				pass
+
 			Enums.ServerPacketID.DumbNoMore:
 				pass
+
 			Enums.ServerPacketID.TradeOK:
 				pass
+
 			Enums.ServerPacketID.UserIndexInServer:
 				stream.get_16()
+
 			Enums.ServerPacketID.DumbNoMore:
 				pass 
+
 			Enums.ServerPacketID.SafeModeOff:
 				pass 
+
 			Enums.ServerPacketID.SafeModeOn:
 				pass   
+
 			Enums.ServerPacketID.RemoveDialogs:
 				pass   	
+
 			Enums.ServerPacketID.RainToggle:
 				pass
+				
 			Enums.ServerPacketID.MeditateToggle:
 				pass
+
 			Enums.ServerPacketID.CommerceInit:
 				handle_commerce_init()
+
 			Enums.ServerPacketID.CommerceEnd:
 				handle_commerce_end()				
+				
 			Enums.ServerPacketID.WorkRequestTarget:
 				Handle_work_request_target(WorkRequestTargetResponse.unpack(stream))
+
 			Enums.ServerPacketID.NavigateToggle:
 				handle_navigate_toggle()
+
 			Enums.ServerPacketID.UpdateExp:
 				handle_update_exp(stream.get_32())
+
 			Enums.ServerPacketID.UserSwing:
 				handle_user_swing()
+
 			Enums.ServerPacketID.UserHitNPC:
 				handle_user_hit_npc(stream.get_32())
+
 			Enums.ServerPacketID.UpdateHP:
 				handle_update_hp(stream.get_16())
+
 			Enums.ServerPacketID.NPCHitUser:
 				handle_npc_hit_user(NPCHitUserResponse.unpack(stream))
+
 			Enums.ServerPacketID.NPCSwing:
 				handle_npc_swing()
+
 			Enums.ServerPacketID.NPCKillUser:
 				handle_npc_kill_user()
+
 			Enums.ServerPacketID.CharacterChange:
 				handle_character_change(CharacterChangeResponse.unpack(stream))
+
 			Enums.ServerPacketID.UpdateSta:
 				handle_update_sta(UpdateStaResponse.unpack(stream))
+
 			Enums.ServerPacketID.UpdateMana:
 				handle_update_mana(stream.get_16())
+
 			Enums.ServerPacketID.PosUpdate:
 				handle_pos_update(PosUpdateResponse.unpack(stream))
+
 			Enums.ServerPacketID.BlockPosition:
 				handle_block_position(BlockPositionResponse.unpack(stream))	
+
 			Enums.ServerPacketID.ObjectCreate:
 				handle_object_create(ObjectCreateResponse.unpack(stream))	
+				
 			Enums.ServerPacketID.ObjectDelete:
 				handle_object_delete(ObjectDeleteResponse.unpack(stream))
+				
 			Enums.ServerPacketID.ChatOverHead:
 				handle_message_chat_over_head(MessageChatOverHeadResponse.unpack(stream))
+
 			Enums.ServerPacketID.UpdateTagAndStatus:
 				handle_update_tag_and_status(UpdateTagAndStatusResponse.unpack(stream))
+
 			Enums.ServerPacketID.ShowMessageBox:
 				handle_show_message_box(stream.get_utf8_string())
+
 			Enums.ServerPacketID.ConsoleMsg: 
 				handle_console_msg(ConsoleMsgResponse.unpack(stream))
+
 			Enums.ServerPacketID.CharacterMove: 
 				handle_character_move(CharacterMoveResponse.unpack(stream))
+
 			Enums.ServerPacketID.PlayWave:
 				handle_play_wave(PlayWaveResponse.unpack(stream))
+
 			Enums.ServerPacketID.LevelUp:
 				handle_level_up(stream.get_16())
+
 			Enums.ServerPacketID.UpdateGold:
 				handle_update_gold(stream.get_32())
+
 			Enums.ServerPacketID.SendSkills:
 				handle_send_skills(SendSkillsResponse.unpack(stream))
+
 			Enums.ServerPacketID.GuildChat:	
 				handle_guild_chat(stream.get_utf8_string())
+
 			Enums.ServerPacketID.UserCharIndexInServer:
 				handle_user_char_index_in_server(stream.get_16())
+
 			Enums.ServerPacketID.UpdateHungerAndThirst:
 				update_hunger_and_thrist(UpdateHungerAndThirstResponse.unpack(stream)) 
+
 			Enums.ServerPacketID.UpdateUserStats:
 				handle_update_stats(UpdateUserStatsResponse.unpack(stream))
+
 			Enums.ServerPacketID.CreateFX:
 				handle_create_fx(CreateFXResponse.unpack(stream))
+
 			Enums.ServerPacketID.SetInvisible:
 				handle_set_invisible(SetInvisibleResponse.unpack(stream))
+
 			Enums.ServerPacketID.CharacterCreate:
 				handle_character_create(CharacterCreateResponse.unpack(stream))
+
 			Enums.ServerPacketID.AreaChanged:
 				handle_area_change(AreaChangedResponse.unpack(stream)) 
+
 			Enums.ServerPacketID.PlayMIDI:
 				handle_play_midi(PlayMIDIResponse.unpack(stream))
+
 			Enums.ServerPacketID.ChangeMap:
 				handle_change_map(ChangeMapResponse.unpack(stream)) 
+
 			Enums.ServerPacketID.ChangeInventorySlot:
 				handle_change_inventory_slot(ChangeInventorySlotResponse.unpack(stream))
+				
 			Enums.ServerPacketID.ChangeNPCInventorySlot:
-				handle_change_npc_inventory_slot(ChangeNPCInventorySlotResponse.unpack(stream))
+				handle_change_npc_inventory_slot(ChangeNPCInventorySlotResponse.unpack(stream))	
+			
+			Enums.ServerPacketID.ChangeBankSlot:
+				handle_change_bank_slot(ChangeBankSlotResponse.unpack(stream))
+
 			Enums.ServerPacketID.ChangeSpellSlot:
 				handle_change_spell_slot(ChangeSpellSlotResponse.unpack(stream))
+
 			Enums.ServerPacketID.RemoveCharDialog:
 				handle_remove_char_dialog(stream.get_16())
+
 			Enums.ServerPacketID.CharacterRemove:
 				handle_character_remove(stream.get_16())
+
 			_:
 				print_debug(packet_name)
 				return
 				
-func handle_remove_char_dialog(char_index:int) -> void:
+func handle_remove_char_dialog(_char_index:int) -> void:
 	pass
 	
 func handle_update_sta(p:UpdateStaResponse) -> void:
@@ -312,7 +369,7 @@ func handle_change_inventory_slot(p:ChangeInventorySlotResponse) -> void:
 	item.icon = ContentManager.get_texture_from_grh(item.grh_id)
 	
 	var item_stack = ItemStack.new(item, p.amount, p.equipped)
-	player_data.inventory.set_item_stack(p.slot - 1, item_stack)
+	player_data.player_inventory.set_item_stack(p.slot - 1, item_stack)
 	
 func handle_change_npc_inventory_slot(p:ChangeNPCInventorySlotResponse) -> void:
 	var item = Item.new()
@@ -327,6 +384,20 @@ func handle_change_npc_inventory_slot(p:ChangeNPCInventorySlotResponse) -> void:
 	item.icon = ContentManager.get_texture_from_grh(item.grh_id)
 		
 	player_data.npc_inventory.set_item_stack(p.slot - 1, ItemStack.new(item, p.amount, false))
+
+func handle_change_bank_slot(p:ChangeBankSlotResponse) -> void:
+	var item = Item.new()
+	item.name = p.name
+	item.type = p.obj_type
+	item.defense = p.defense
+	item.grh_id = p.grh_index
+	item.id = p.obj_index
+	item.max_hit = p.max_hit
+	item.min_hit = p.min_hit
+	item.price = p.value 
+	item.icon = ContentManager.get_texture_from_grh(item.grh_id)
+	player_data.bank_inventory.set_item_stack(p.slot -1, ItemStack.new(item, p.amount, false))
+
 	
 func handle_change_spell_slot(p:ChangeSpellSlotResponse) -> void:
 	player_data.set_spell(p.slot -1, p.id, p.name)
@@ -359,7 +430,7 @@ func handle_play_midi(p:PlayMIDIResponse) -> void:
 	music_stream_player.stream = load("res://assets/musics/%d.mp3" % p.id)
 	music_stream_player.play()
 
-func handle_area_change(p:AreaChangedResponse) -> void:
+func handle_area_change(_p:AreaChangedResponse) -> void:
 	pass
 
 func handle_character_create(p:CharacterCreateResponse) -> void:
@@ -405,7 +476,7 @@ func handle_update_exp(experience:int) -> void:
 func handle_update_mana(mana:int) -> void:
 	player_data.mp = mana
 
-func handle_guild_chat(message:String) -> void:
+func handle_guild_chat(_message:String) -> void:
 	pass
 
 func Handle_work_request_target(p:WorkRequestTargetResponse) -> void:
@@ -448,10 +519,10 @@ func handle_show_message_box(message:String) -> void:
 	else :
 		Utils.show_message_box("Server", message, self)	
 
-func handle_send_skills(p:SendSkillsResponse) -> void:
+func handle_send_skills(_p:SendSkillsResponse) -> void:
 	pass
 
-func handle_level_up(skill_points:int) -> void:
+func handle_level_up(_skill_points:int) -> void:
 	pass
 
 func handle_play_wave(p:PlayWaveResponse) -> void:

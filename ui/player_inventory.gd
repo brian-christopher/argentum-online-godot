@@ -5,9 +5,10 @@ class_name PlayerInventory
 
 var player_data:PlayerData
 
-func set_player_data(player_data:PlayerData) -> void:
-	self.player_data = player_data
-	inventory_container.set_inventory(player_data.inventory)
+func set_player_data(p_player_data:PlayerData) -> void:
+	player_data = p_player_data
+	
+	inventory_container.set_inventory(player_data.player_inventory)
 	inventory_container.slot_pressed.connect(on_slot_pressed)
 
 func on_slot_pressed(slot_index:int) -> void:

@@ -16,7 +16,7 @@ func set_inventory(inventory:Inventory) -> void:
 		inventory_slot.pressed.connect(on_slot_pressed.bind(i)) 
 		add_child(inventory_slot)
 	
-func on_inventoy_slot_changed(slot_index, old_content:ItemStack, new_content:ItemStack) -> void:
+func on_inventoy_slot_changed(slot_index, _old_content:ItemStack, new_content:ItemStack) -> void:
 	var inventory_slot = get_inventory_slot(slot_index)
 	if inventory_slot:
 		inventory_slot.set_item(new_content.item)

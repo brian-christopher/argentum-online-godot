@@ -5,7 +5,7 @@ var item:Item
 var quantity:int
 var equipped:bool
 
-func _init(item:Item, quantity:int, equipped:bool) -> void:
-	self.item = item
-	self.quantity = quantity
-	self.equipped = equipped
+func _init(p_item:Item, p_quantity:int, p_equipped:bool) -> void:
+	item = p_item
+	quantity = p_quantity
+	equipped = p_equipped

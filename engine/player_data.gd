@@ -5,8 +5,9 @@ signal property_changed(property_name:String)
 signal spell_changed(slot:int, id:int, name:String)
 
 
-var inventory:Inventory
+var player_inventory:Inventory
 var npc_inventory:Inventory
+var bank_inventory:Inventory
 
 var comerciando:bool
 var user_navegando:bool
@@ -14,8 +15,9 @@ var using_skill:int
 var spells:Array[SpellData]
 
 func _init() -> void:
-	inventory = Inventory.new(Declares.MAX_INVENTORY_SLOTS)
+	player_inventory = Inventory.new(Declares.MAX_INVENTORY_SLOTS)
 	npc_inventory = Inventory.new(Declares.MAX_NPC_INVENTORY_SLOTS)
+	bank_inventory = Inventory.new(Declares.MAX_BANCOINVENTORY_SLOTS)
 	
 	spells.resize(Declares.MAXHECHI)
 	spells.fill(SpellData.new(0, "(None)"))
