@@ -11,6 +11,7 @@ var bank_inventory:Inventory
 
 var comerciando:bool
 var user_navegando:bool
+var user_paralizado:bool
 var using_skill:int 
 var spells:Array[SpellData]
 
@@ -112,6 +113,10 @@ var hunger:int:
 	set(value):
 		hunger = value
 		property_changed.emit("hunger")
+
+var is_alive:bool:
+	get:
+		return hp > 0
 
 func set_spell(slot:int, spell_id:int, spell_name:String) -> void:
 	spells[slot] = SpellData.new(spell_id, spell_name)

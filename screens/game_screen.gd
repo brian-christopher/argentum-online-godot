@@ -52,9 +52,9 @@ func check_keys() -> void:
 	
 	for k in input_map:
 		if Input.is_action_pressed(k): 
-			#If frmMain.TrainingMacro.Enabled Then frmMain.DesactivarMacroHechizos
 			move_to(character, input_map[k])
 			return
+
 
 func legal_position(x:int, y:int) -> bool:
 	if !Utils.in_map_bounds(x, y):
@@ -69,6 +69,7 @@ func legal_position(x:int, y:int) -> bool:
 	if player_data.user_navegando != world.map.is_water_at_position(x, y):
 		return false
 	return true
+
 
 func move_to(character:CharacterController, heading:int) -> void:
 	var legal_ok := false
@@ -184,6 +185,9 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				pass
 				
 			Enums.ServerPacketID.MeditateToggle:
+				pass
+
+			Enums.ServerPacketID.Disconnect:
 				pass
 
 			Enums.ServerPacketID.BankInit:

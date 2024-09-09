@@ -37,7 +37,7 @@ func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
 
 	
-func add_to_console(message:String, color:Color, bold:bool, italic:bool) -> void:
+func add_to_console(message:String, color:Color = Color.WHITE, bold:bool = false, italic:bool = false) -> void:
 	message = "[color=%s]%s[/color]" % [color.to_html(), message]  
 	if italic:
 		message = "[i]%s[/i]" % message 
@@ -104,9 +104,7 @@ func _on_send_text_text_submitted(new_text: String) -> void:
 	send_text.text = ""
 	send_text.hide()
 	
-	var p = TalkRequest.new()
-	p.message = new_text
-	SessionManager.send_packet(p)
+	Commands.parse_user_command(new_text, player_data, self)
 
 
 func on_player_property_changed(property_name:String) -> void:

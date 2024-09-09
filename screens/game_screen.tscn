@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://dbsfihxi387kv"]
 
 [ext_resource type="Script" path="res://screens/game_screen.gd" id="1_hpf24"]
-[ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_dgea5"]
+[ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_mfdm7"]
 [ext_resource type="PackedScene" uid="uid://cvqfqx1267dq1" path="res://scenes/world.tscn" id="3_drqlh"]
 [ext_resource type="PackedScene" uid="uid://bij1hr2x2ioha" path="res://ui/stats_bar.tscn" id="5_74buj"]
 [ext_resource type="PackedScene" uid="uid://c3as2dgbfsjwj" path="res://ui/player_inventory.tscn" id="6_12hwq"]
@@ -24,7 +24,7 @@ world = NodePath("UIController/MainView/SubViewport/World")
 music_stream_player = NodePath("Music")
 
 [node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "name_label", "level_label", "gold_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar", "player_inventory", "bank_inventory", "npc_inventory", "spells_container", "view_container")]
-script = ExtResource("2_dgea5")
+script = ExtResource("2_mfdm7")
 rich_text = NodePath("RichTextBackground/RichText")
 send_text = NodePath("SendText")
 name_label = NodePath("Name")
