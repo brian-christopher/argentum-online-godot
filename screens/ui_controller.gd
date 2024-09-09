@@ -174,6 +174,7 @@ func set_player_name(p_name:String) -> void:
 
 func show_npc_inventory() -> void:
 	npc_inventory.show()
+	npc_inventory.clear_object_info()
 	npc_inventory.quantity = 1
 
 

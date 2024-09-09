@@ -38,7 +38,7 @@ hunger_bar = NodePath("StatBars/HungerBar")
 experience_bar = NodePath("ExperienceBar")
 player_inventory = NodePath("MainPanel/PlayerInventory")
 bank_inventory = NodePath("BankInventoryPanel")
-npc_inventory = NodePath("NpcInventory")
+npc_inventory = NodePath("NpcInventoryPanel")
 spells_container = NodePath("MainPanel/SpellsContainer")
 view_container = NodePath("MainView")
 
@@ -234,7 +234,7 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="NpcInventory" parent="UIController" instance=ExtResource("8_p571h")]
+[node name="NpcInventoryPanel" parent="UIController" instance=ExtResource("8_p571h")]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5

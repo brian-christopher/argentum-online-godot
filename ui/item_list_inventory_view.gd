@@ -14,24 +14,7 @@ func on_inventoy_slot_changed(slot_index, _old_content:ItemStack, new_content:It
 	var item := new_content.item
 	
 	set_item_text(slot_index, item.name if !item.name.is_empty() else "Nada")
-	set_item_icon(slot_index, item.icon)
-	
-	if(item.name.is_empty()):
-		set_item_tooltip(slot_index, "Nada")
-	else:
-		var tool_tip_text = \
-		"""
-		%s
-		Precio %d
-		Cantidad %d
-		""" % [item.name, item.price, new_content.quantity]
-		
-		if item.type == Enums.EObjType.WEAPON:
-			tool_tip_text += "Golpe: %d/%d" % [item.min_hit, item.max_hit]
-		elif item.type == Enums.EObjType.ARMADURA:
-			tool_tip_text += "Defensa: %d" % item.defense
-				
-		set_item_tooltip(slot_index, tool_tip_text)
+	set_item_icon(slot_index, item.icon) 
 
 func get_selected_item() -> int:
 	var selected_items := get_selected_items()
