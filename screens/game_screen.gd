@@ -39,10 +39,12 @@ func _process(_delta: float) -> void:
 			
 func check_keys() -> void:
 	var character = world.get_character_by_id(main_character_index)
-	if character == null: return
+	if character == null: 
+		return
 	
-	#If Not Application.IsAppActive() Then Exit Sub
-	#If Comerciando Then Exit Sub
+	if player_data.comerciando:
+		return
+	 
 	#If frmForo.Visible Then Exit Sub
 	#If pausa Then Exit Sub
 	if character.is_moving: return
