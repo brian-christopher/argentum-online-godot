@@ -160,6 +160,9 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 			Enums.ServerPacketID.TradeOK:
 				pass
 
+			Enums.ServerPacketID.BankOK:
+				pass
+
 			Enums.ServerPacketID.UserIndexInServer:
 				stream.get_16()
 
@@ -180,6 +183,12 @@ func handle_incoming_data(stream:StreamPeerBuffer) -> void:
 				
 			Enums.ServerPacketID.MeditateToggle:
 				pass
+
+			Enums.ServerPacketID.BankInit:
+				handle_bank_init()
+
+			Enums.ServerPacketID.BankEnd:
+				handle_bank_end()
 
 			Enums.ServerPacketID.CommerceInit:
 				handle_commerce_init()
@@ -499,19 +508,34 @@ func Handle_work_request_target(p:WorkRequestTargetResponse) -> void:
 		Enums.Skill.PROYECTILES:
 			ui_controller.add_to_console(Declares.MENSAJE_TRABAJO_PROYECTILES, color, false, false)
 
+
 func handle_logged(username:String) -> void:
 	player_data.name = username
 
+
 func handle_navigate_toggle() -> void:
 	player_data.user_navegando = !player_data.user_navegando
+
+
+func handle_bank_init() -> void:
+	ui_controller.show_bank_inventory()
+	player_data.comerciando = true
+
+
+func handle_bank_end() -> void:
+	ui_controller.hide_bank_inventory()
+	player_data.comerciando = false
+
 
 func handle_commerce_init() -> void:
 	ui_controller.show_npc_inventory()
 	player_data.comerciando = true
 
+
 func handle_commerce_end() -> void:
 	ui_controller.hide_npc_inventory()
 	player_data.comerciando = false
+
 
 func handle_show_message_box(message:String) -> void:
 	if message.to_lower().contains("inactivo"):

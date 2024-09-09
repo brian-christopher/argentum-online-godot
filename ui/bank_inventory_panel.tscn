@@ -1,12 +1,151 @@
-[gd_scene load_steps=2 format=3 uid="uid://b82qwyjj228la"]
+[gd_scene load_steps=5 format=3 uid="uid://db72735ruk5mw"]
 
 [ext_resource type="Script" path="res://ui/bank_inventory_panel.gd" id="1_n6h1n"]
+[ext_resource type="PackedScene" uid="uid://duypr07daioym" path="res://ui/inventory_container.tscn" id="2_5df6q"]
 
-[node name="BankInventoryPanel" type="Control"]
-layout_mode = 3
-anchors_preset = 15
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wo33i"]
+bg_color = Color(0.152748, 0.152748, 0.152748, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ihx4a"]
+font_size = 40
+
+[node name="BankInventoryPanel" type="Panel" node_paths=PackedStringArray("bank_inventory", "player_inventory", "object_info_label")]
+custom_minimum_size = Vector2(415, 472)
+offset_right = 543.0
+offset_bottom = 521.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wo33i")
+script = ExtResource("1_n6h1n")
+bank_inventory = NodePath("BankInventory")
+player_inventory = NodePath("PlayerInventory")
+object_info_label = NodePath("Info/MarginContainer/Text")
+
+[node name="BankInventory" parent="." instance=ExtResource("2_5df6q")]
+custom_minimum_size = Vector2(200, 320)
+layout_mode = 0
+offset_left = 25.0
+offset_top = 123.0
+offset_right = 225.0
+offset_bottom = 443.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+
+[node name="PlayerInventory" parent="." instance=ExtResource("2_5df6q")]
+custom_minimum_size = Vector2(200, 240)
+layout_mode = 0
+offset_left = 325.0
+offset_top = 123.0
+offset_right = 525.0
+offset_bottom = 363.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -92.0
+offset_right = 92.0
+offset_bottom = 55.0
+grow_horizontal = 2
+text = "Banco
+"
+label_settings = SubResource("LabelSettings_ihx4a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Retrieve" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = -65.0
+offset_right = 205.0
+offset_bottom = -31.0
+grow_vertical = 0
+focus_mode = 0
+text = "Retirar
+"
+
+[node name="Store" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -207.0
+offset_top = -65.0
+offset_right = -27.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+text = "Depositar
+"
+
+[node name="Quantity" type="SpinBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.5
+offset_top = -65.0
+offset_right = 41.5
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 10000.0
+value = 1.0
+alignment = 1
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -31.0
+offset_bottom = 35.0
+grow_horizontal = 0
+text = "X"
+
+[node name="Info" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.5
+offset_top = -205.5
+offset_right = 217.5
+offset_bottom = -148.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_n6h1n")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Info"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Text" type="Label" parent="Info/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[connection signal="slot_selected" from="BankInventory" to="." method="_on_bank_inventory_slot_selected"]
+[connection signal="slot_selected" from="PlayerInventory" to="." method="_on_player_inventory_slot_selected"]
+[connection signal="pressed" from="Retrieve" to="." method="_on_retrieve_pressed"]
+[connection signal="pressed" from="Store" to="." method="_on_store_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

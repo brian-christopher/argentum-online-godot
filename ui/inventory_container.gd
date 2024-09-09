@@ -2,12 +2,15 @@ extends GridContainer
 class_name InventoryContainer
 
 signal slot_pressed(slot_index:int)
+signal slot_selected(slot_index:int)
 
 @export var inventory_slot_scene:PackedScene
 
 var selected_slot:int = -1
+var inventory:Inventory
 
-func set_inventory(inventory:Inventory) -> void:
+func set_inventory(p_inventory:Inventory) -> void:
+	inventory = p_inventory
 	inventory.slot_changed.connect(on_inventoy_slot_changed)
 	
 	for i in inventory.get_size():
@@ -41,3 +44,4 @@ func on_slot_pressed(id:int) -> void:
 	slot = get_inventory_slot(id)
 	if slot:
 		slot.set_selected(true)
+		slot_selected.emit(id)

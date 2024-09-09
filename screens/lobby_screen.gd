@@ -51,8 +51,8 @@ func _on_login_panel_login_button_pressed() -> void:
 func _on_login_panel_register_button_pressed() -> void:
 	connect_to_server(State.Register)
 
-func _on_login_panel_error(str: String) -> void:
-	Utils.show_message_box("Error", str, self)
+func _on_login_panel_error(error_message: String) -> void:
+	Utils.show_message_box("Error", error_message, self)
 	
 func connect_to_server(state:int) -> void:
 	login_panel.disable_auth_buttons()

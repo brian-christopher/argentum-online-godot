@@ -15,8 +15,11 @@ class_name UIController
 @export var experience_bar:StatsBar
 
 @export var player_inventory:PlayerInventory
+@export var bank_inventory:BankInventoryPanel
+@export var npc_inventory:NpcInventoryPanel
 @export var spells_container:SpellsContainer
 @export var view_container:SubViewportContainer
+
 var player_data:PlayerData
 
 func set_player_data(p_player_data:PlayerData) -> void:
@@ -26,10 +29,13 @@ func set_player_data(p_player_data:PlayerData) -> void:
 	player_inventory.set_player_data(player_data)
 	spells_container.initialize(player_data, self)  
 	
-	get_node("NpcInventory").initialize(player_data)
+	npc_inventory.initialize(player_data)
+	bank_inventory.initialize(player_data)
+
 	
 func append_text(text:String) -> void:
 	rich_text.append_text(text + "\n")
+
 	
 func add_to_console(message:String, color:Color, bold:bool, italic:bool) -> void:
 	message = "[color=%s]%s[/color]" % [color.to_html(), message]  
@@ -38,6 +44,7 @@ func add_to_console(message:String, color:Color, bold:bool, italic:bool) -> void
 	if bold:
 		message = "[b]%s[/b]" % message  
 	rich_text.append_text(message + "\n")
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -59,9 +66,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		use_object()
 	if event.is_action_pressed("meditate"):
 		meditate()
+
 			
 func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -> Vector2:
 	return (transform_2d.inverse() * mouse_position / Declares.TILE_SIZE).ceil()
+
 			
 func _on_main_view_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -87,6 +96,7 @@ func _on_main_view_gui_input(event: InputEvent) -> void:
 			)) 
 			set_mouse_cursor_shape(Control.CURSOR_ARROW)
 			player_data.using_skill = Enums.Skill.NONE
+
 				
 func _on_send_text_text_submitted(new_text: String) -> void:
 	if new_text.is_empty():
@@ -97,6 +107,7 @@ func _on_send_text_text_submitted(new_text: String) -> void:
 	var p = TalkRequest.new()
 	p.message = new_text
 	SessionManager.send_packet(p)
+
 
 func on_player_property_changed(property_name:String) -> void:
 	match property_name:
@@ -120,9 +131,11 @@ func on_player_property_changed(property_name:String) -> void:
 			gold_label.text = str(player_data.gold)
 		_:
 			print(property_name) 
+
 			
 func set_mouse_cursor_shape(shape:int) -> void:
 	Input.set_default_cursor_shape(shape) 
+
 
 func equip_object() -> void:
 	var selected_slot = player_inventory.inventory_container.selected_slot
@@ -130,6 +143,7 @@ func equip_object() -> void:
 		var p = EquipItemRequest.new()
 		p.slot = selected_slot + 1
 		SessionManager.send_packet(p) 
+
 
 func pick_up() -> void:
 	SessionManager.send_packet(PickUpRequest.new())
@@ -140,30 +154,47 @@ func hide_player() -> void:
 	
 	SessionManager.send_packet(p)
 
+
 func use_object() -> void:
 	var selected_slot = player_inventory.inventory_container.selected_slot
 	if selected_slot >= 0 && selected_slot < Declares.MAX_INVENTORY_SLOTS_SERVER:
 		var p = UseItemRequest.new()
 		p.slot = selected_slot + 1
 		SessionManager.send_packet(p) 
+
 		
 func meditate() -> void:
 	if player_data.max_mp != 0:
 		SessionManager.send_packet(MeditateRequest.new()) 
 
+
 func set_player_name(p_name:String) -> void:
 	name_label.text = p_name
 
+
 func show_npc_inventory() -> void:
-	get_node("NpcInventory").show()
-	get_node("NpcInventory").quantity = 1
+	npc_inventory.show()
+	npc_inventory.quantity = 1
+
 
 func hide_npc_inventory() -> void:
-	get_node("NpcInventory").hide()
+	npc_inventory.hide()
+
+
+func show_bank_inventory() -> void:
+	bank_inventory.show()
+	bank_inventory.clear_object_info()
+	bank_inventory.quantity = 1
+
+
+func hide_bank_inventory() -> void:
+	bank_inventory.hide()
+
 
 func _on_show_inventory_pressed() -> void:
 	spells_container.hide()
 	player_inventory.show()
+
 
 func _on_show_spells_pressed() -> void:
 	player_inventory.hide()

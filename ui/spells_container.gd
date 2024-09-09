@@ -34,8 +34,8 @@ func _on_info_pressed() -> void:
 	
 	SessionManager.send_packet(p)
 	
-func on_player_spell_changed(slot:int, id:int, name:String) -> void:
-	item_list.set_item_text(slot, name)
+func on_player_spell_changed(slot:int, _id:int, p_name:String) -> void:
+	item_list.set_item_text(slot, p_name)
 	
 func selected_item() -> int:
 	var selected_items = item_list.get_selected_items()

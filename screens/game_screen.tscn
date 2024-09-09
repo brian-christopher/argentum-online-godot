@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbsfihxi387kv"]
+[gd_scene load_steps=12 format=3 uid="uid://dbsfihxi387kv"]
 
 [ext_resource type="Script" path="res://screens/game_screen.gd" id="1_hpf24"]
 [ext_resource type="Script" path="res://screens/ui_controller.gd" id="2_dgea5"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b87oulnrqoohi" path="res://assets/textures/510.png" id="6_wiyuk"]
 [ext_resource type="PackedScene" uid="uid://c2ox3dxvm6hoa" path="res://ui/spells_container.tscn" id="7_y3n46"]
 [ext_resource type="PackedScene" uid="uid://bmsv0xijnvsfe" path="res://ui/npc_inventory_panel.tscn" id="8_p571h"]
+[ext_resource type="PackedScene" uid="uid://db72735ruk5mw" path="res://ui/bank_inventory_panel.tscn" id="9_d8myq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1nye1"]
 font_size = 20
@@ -22,7 +23,7 @@ main_camera = NodePath("UIController/MainView/SubViewport/MainCamera")
 world = NodePath("UIController/MainView/SubViewport/World")
 music_stream_player = NodePath("Music")
 
-[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "name_label", "level_label", "gold_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar", "player_inventory", "spells_container", "view_container")]
+[node name="UIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("rich_text", "send_text", "name_label", "level_label", "gold_label", "hp_bar", "mp_bar", "sta_bar", "thirst_bar", "hunger_bar", "experience_bar", "player_inventory", "bank_inventory", "npc_inventory", "spells_container", "view_container")]
 script = ExtResource("2_dgea5")
 rich_text = NodePath("RichTextBackground/RichText")
 send_text = NodePath("SendText")
@@ -36,6 +37,8 @@ thirst_bar = NodePath("StatBars/ThirstBar")
 hunger_bar = NodePath("StatBars/HungerBar")
 experience_bar = NodePath("ExperienceBar")
 player_inventory = NodePath("MainPanel/PlayerInventory")
+bank_inventory = NodePath("BankInventoryPanel")
+npc_inventory = NodePath("NpcInventory")
 spells_container = NodePath("MainPanel/SpellsContainer")
 view_container = NodePath("MainView")
 
@@ -242,6 +245,20 @@ offset_left = -271.5
 offset_top = -268.5
 offset_right = 271.5
 offset_bottom = 268.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BankInventoryPanel" parent="UIController" instance=ExtResource("9_d8myq")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -271.5
+offset_top = -260.5
+offset_right = 271.5
+offset_bottom = 260.5
 grow_horizontal = 2
 grow_vertical = 2
 

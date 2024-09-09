@@ -15,16 +15,14 @@ var privs:int
 var criminal:bool
 var pie:bool
 
-func move_to_heading(heading: int) -> void:
+func move_to_heading(p_heading: int) -> void:
 	if is_moving:
 		position = target_position
-	var offset = Utils.heading_to_vector(heading)
+	var offset = Utils.heading_to_vector(p_heading)
 	is_moving = true
 	target_position = position + (offset * 32)
 	
-func _physics_process(delta: float) -> void:
-	pass
-	
+
 func _process(delta: float) -> void:
 	process_movement(delta)
 	procces_animation()
@@ -42,8 +40,8 @@ func procces_animation() -> void:
 	else:
 		renderer.play("idle_" + heading_to_string(heading))
 
-func set_character_name(str:String) -> void:
-	%Name.text = str
+func set_character_name(p_name:String) -> void:
+	%Name.text = p_name
 
 func set_character_name_color(color:Color) -> void:
 	%Name.self_modulate = color
@@ -57,8 +55,8 @@ func talk(msg:String, color:Color = Color.WHITE) -> void:
 func _on_talk_timeout_timeout() -> void:
 	$Talk.hide()
 
-func heading_to_string(heading:int) -> String:
-	match heading:
+func heading_to_string(p_heading:int) -> String:
+	match p_heading:
 		Enums.Heading.NORTH:
 			return "up"
 		Enums.Heading.SOUTH:

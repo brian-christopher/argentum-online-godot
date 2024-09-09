@@ -10,7 +10,7 @@ func set_inventory(p_inventory:Inventory) -> void:
 	for i in inventory.get_size():
 		add_item("Nada")
 
-func on_inventoy_slot_changed(slot_index, old_content:ItemStack, new_content:ItemStack) -> void:
+func on_inventoy_slot_changed(slot_index, _old_content:ItemStack, new_content:ItemStack) -> void:
 	var item := new_content.item
 	
 	set_item_text(slot_index, item.name if !item.name.is_empty() else "Nada")

@@ -42,9 +42,9 @@ static func in_map_bounds(x:int, y:int) -> bool:
 	return x >= 1 && x <= Declares.MAP_WIDTH && \
 		   y >= 1 && y <= Declares.MAP_HEIGHT
 		
-static func string_has_valid_characters(str:String) -> bool:
-	for i in str.length():
-		if !Utils.is_legal_character(str.unicode_at(i)): 
+static func string_has_valid_characters(p_str:String) -> bool:
+	for i in p_str.length():
+		if !Utils.is_legal_character(p_str.unicode_at(i)): 
 			return false 
 	return true
 
