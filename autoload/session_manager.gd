@@ -61,7 +61,7 @@ func _process(_delta: float) -> void:
 		var available_bytes: int = _stream.get_available_bytes()
 		if available_bytes > 0:
 			#print("available bytes: ", available_bytes)
-			var data_array: Array = _stream.get_partial_data(available_bytes)
+			var data_array: Array = _stream.get_data(available_bytes)
 			# Check for read error.
 			if data_array[0] != OK:
 				print("Error getting data from stream: ", data_array[0])

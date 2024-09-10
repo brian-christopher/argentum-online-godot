@@ -31,11 +31,15 @@ func on_session_manager_data(data:PackedByteArray) -> void:
 	var stream = StreamPeerBuffer.new()
 	stream.data_array = data
 	
-	match stream.get_u8():
+	var packet_id = stream.get_u8()
+	
+	match packet_id:
 		Enums.ServerPacketID.Logged:
 			switch_to_game_screen(data)
 		Enums.ServerPacketID.ErrorMsg:
 			login_failed(stream.get_utf8_string())
+		_:
+			print_debug(packet_id)
 		
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:

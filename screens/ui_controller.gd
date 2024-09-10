@@ -66,6 +66,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		use_object()
 	if event.is_action_pressed("meditate"):
 		meditate()
+	if event.is_action_pressed("exit_game"):
+		exit_game()
+	if event.is_action_pressed("request_refresh"):
+		request_position()
+	if event.is_action_pressed("tam_animal"):
+		tam_animal()
+	if event.is_action_pressed("steal"):
+		steal()
+	if event.is_action_pressed("take_screenshot"):
+		take_screenshot()
 
 			
 func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -> Vector2:
@@ -146,6 +156,7 @@ func equip_object() -> void:
 func pick_up() -> void:
 	SessionManager.send_packet(PickUpRequest.new())
 
+
 func hide_player() -> void:
 	var p = WorldRequest.new()
 	p.skill = Enums.Skill.OCULTARSE
@@ -164,6 +175,37 @@ func use_object() -> void:
 func meditate() -> void:
 	if player_data.max_mp != 0:
 		SessionManager.send_packet(MeditateRequest.new()) 
+
+
+func exit_game() -> void:
+	SessionManager.send_packet(\
+		SendSinglePacketRequest.new(Enums.ClientPacketID.Quit))
+
+
+func request_position() -> void:
+	SessionManager.send_packet(\
+		SendSinglePacketRequest.new(Enums.ClientPacketID.RequestPositionUpdate))
+
+
+func tam_animal() -> void:
+	SessionManager.send_packet(\
+		WorldRequest.new(Enums.Skill.DOMAR))
+
+
+func steal() -> void:
+	SessionManager.send_packet(\
+		WorldRequest.new(Enums.Skill.ROBAR))
+
+
+func take_screenshot() -> void:
+	await RenderingServer.frame_post_draw
+	
+	var viewport = get_viewport()
+	var img = viewport.get_texture().get_image()
+	var img_name = str(Time.get_unix_time_from_system()) + ".png"
+
+	img.save_png("user://screenshots/" + img_name)
+	add_to_console("Foto tomada: " + img_name, Color.AQUAMARINE, false, true)
 
 
 func set_player_name(p_name:String) -> void:
