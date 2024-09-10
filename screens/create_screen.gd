@@ -24,13 +24,14 @@ func on_session_manager_data(data:PackedByteArray) -> void:
 	var stream = StreamPeerBuffer.new()
 	stream.data_array = data
 	 
-	match stream.get_u8():
-		Enums.ServerPacketID.Logged:
-			switch_to_game_screen(data)
+	match stream.get_u8(): 
 		Enums.ServerPacketID.ErrorMsg:
 			Utils.show_message_box("Error", stream.get_utf8_string(), self) 
 		Enums.ServerPacketID.DiceRoll:
 			handle_dice_roll(DiceRollResponse.unpack(stream))
+		_:
+			switch_to_game_screen(data)
+
 
 func handle_dice_roll(p:DiceRollResponse) -> void:
 	for i in p.attributes.size():

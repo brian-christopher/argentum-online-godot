@@ -30,16 +30,12 @@ func on_session_disconnected() -> void:
 func on_session_manager_data(data:PackedByteArray) -> void:
 	var stream = StreamPeerBuffer.new()
 	stream.data_array = data
-	
-	var packet_id = stream.get_u8()
-	
-	match packet_id:
-		Enums.ServerPacketID.Logged:
-			switch_to_game_screen(data)
+	 
+	match stream.get_u8() : 
 		Enums.ServerPacketID.ErrorMsg:
 			login_failed(stream.get_utf8_string())
 		_:
-			print_debug(packet_id)
+			switch_to_game_screen(data)
 		
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:

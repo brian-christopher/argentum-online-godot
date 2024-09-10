@@ -13,8 +13,7 @@ func _ready() -> void:
 	
 func connect_to_server(host: String, port: int) -> void:
 	print("Connecting to %s:%d" % [host, port])
-	# Reset status so we can tell if it changes to error again.
-	_stream = StreamPeerTCP.new()
+	# Reset status so we can tell if it changes to error again. 
 	_status = _stream.STATUS_NONE
 	if _stream.connect_to_host(host, port) != OK:
 		print("Error connecting to host.")
