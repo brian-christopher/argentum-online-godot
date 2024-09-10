@@ -1,3 +1,3 @@
 # argentum-online-godot
  
-<img src="https://i.ibb.co/y8kWNcB/READ.png"/>
+![screenshot](https://github.com/brian-christopher/argentum-online-godot/blob/main/screenshot.png)
