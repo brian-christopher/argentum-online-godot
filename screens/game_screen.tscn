@@ -186,13 +186,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 clip_text = true
 
-[node name="GoldIcon" type="TextureRect" parent="UIController"]
+[node name="GoldIcon" type="TextureButton" parent="UIController"]
 offset_left = 792.0
 offset_top = 445.0
 offset_right = 824.0
 offset_bottom = 477.0
-texture = ExtResource("6_wiyuk")
-expand_mode = 1
+texture_normal = ExtResource("6_wiyuk")
 
 [node name="Gold" type="Label" parent="UIController"]
 self_modulate = Color(1, 1, 0.0745098, 1)
@@ -267,5 +266,6 @@ bus = &"music"
 
 [connection signal="gui_input" from="UIController/MainView" to="UIController" method="_on_main_view_gui_input"]
 [connection signal="text_submitted" from="UIController/SendText" to="UIController" method="_on_send_text_text_submitted"]
+[connection signal="pressed" from="UIController/GoldIcon" to="UIController" method="_on_gold_icon_pressed"]
 [connection signal="pressed" from="UIController/MainPanel/Buttons/ShowInventory" to="UIController" method="_on_show_inventory_pressed"]
 [connection signal="pressed" from="UIController/MainPanel/Buttons/ShowSpells" to="UIController" method="_on_show_spells_pressed"]

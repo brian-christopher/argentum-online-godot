@@ -76,6 +76,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		steal()
 	if event.is_action_pressed("take_screenshot"):
 		take_screenshot()
+	if event.is_action_pressed("drop_object"):
+		drop_object()
 
 			
 func get_tile_mouse_position(transform_2d:Transform2D, mouse_position:Vector2) -> Vector2:
@@ -146,7 +148,7 @@ func set_mouse_cursor_shape(shape:int) -> void:
 
 
 func equip_object() -> void:
-	var selected_slot = player_inventory.inventory_container.selected_slot
+	var selected_slot = player_inventory.selected_slot
 	if selected_slot >= 0 && selected_slot < Declares.MAX_INVENTORY_SLOTS_SERVER:
 		var p = EquipItemRequest.new()
 		p.slot = selected_slot + 1
@@ -165,7 +167,8 @@ func hide_player() -> void:
 
 
 func use_object() -> void:
-	var selected_slot = player_inventory.inventory_container.selected_slot
+	var selected_slot = player_inventory.selected_slot
+
 	if selected_slot >= 0 && selected_slot < Declares.MAX_INVENTORY_SLOTS_SERVER:
 		var p = UseItemRequest.new()
 		p.slot = selected_slot + 1
@@ -208,6 +211,18 @@ func take_screenshot() -> void:
 	add_to_console("Foto tomada: " + img_name, Color.AQUAMARINE, false, true)
 
 
+func drop_object() -> void:
+	var selected_slot = player_inventory.selected_slot
+	if selected_slot == -1:
+		return 
+
+	if player_data.player_inventory.get_item_stack(selected_slot).item.id == 0:
+		return
+
+	create_drop_item_dialig_box("Tirar Item", func(amount): 
+		SessionManager.send_packet(DropRequest.new(selected_slot + 1, amount))
+		)
+
 func set_player_name(p_name:String) -> void:
 	name_label.text = p_name
 
@@ -240,3 +255,39 @@ func _on_show_inventory_pressed() -> void:
 func _on_show_spells_pressed() -> void:
 	player_inventory.hide()
 	spells_container.show()
+
+
+func _on_gold_icon_pressed() -> void:
+	create_drop_item_dialig_box("Tirar Oro", func(amount):
+		if player_data.gold <= amount:
+			amount = player_data.gold 
+		SessionManager.send_packet(DropRequest.new(Declares.FLAGORO, amount))
+		)
+
+
+func create_drop_item_dialig_box(title:String, accept_callable:Callable) -> void:
+	var dialog = ConfirmationDialog.new()
+	var spin_box = SpinBox.new()
+	spin_box.max_value = 10000
+	spin_box.min_value = 0
+	spin_box.value = 1
+	dialog.add_child(spin_box)  
+
+	add_child(dialog) 
+	dialog.unresizable = true
+	dialog.dialog_hide_on_ok = false
+	dialog.title = title
+	dialog.cancel_button_text = "Tirar todo"
+
+	dialog.get_cancel_button()\
+		.pressed.connect(func(): dialog.queue_free())
+
+	dialog.canceled.connect(func(): 
+		accept_callable.call(10000)
+		dialog.queue_free())
+	
+	dialog.confirmed.connect(func():
+		accept_callable.call(spin_box.value)
+		dialog.queue_free()) 
+
+	dialog.popup_centered()

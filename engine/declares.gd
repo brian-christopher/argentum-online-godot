@@ -17,6 +17,8 @@ const NUMCIUDADES = 5
 const NUMCLASES = 16
 const NUMRAZAS = 5
 
+const FLAGORO = 21
+
 const bCabeza = 1
 const bPiernaIzquierda = 2
 const bPiernaDerecha = 3

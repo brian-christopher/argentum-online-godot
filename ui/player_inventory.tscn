@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://ui/player_inventory.gd" id="1_5qxj3"]
 [ext_resource type="PackedScene" uid="uid://duypr07daioym" path="res://ui/inventory_container.tscn" id="1_rrjrt"]
 
-[node name="PlayerInventory" type="Panel" node_paths=PackedStringArray("inventory_container")]
+[node name="PlayerInventory" type="Panel" node_paths=PackedStringArray("_inventory_container")]
 custom_minimum_size = Vector2(200, 160)
 offset_right = 200.0
 offset_bottom = 200.0
 mouse_filter = 1
 script = ExtResource("1_5qxj3")
-inventory_container = NodePath("InventoryContainer")
+_inventory_container = NodePath("InventoryContainer")
 
 [node name="InventoryContainer" parent="." instance=ExtResource("1_rrjrt")]
 layout_mode = 1
